@@ -45,7 +45,13 @@ country	        국적	        이산형	"United-States(미국), Cambodia(캄보
 ```
 ## III. Methodology
 - Explaining your choice of algorithms (methods) - Explaining features (if any)
-- 
+- 우리는 데이터의 다양한 유형을 알고 있지만 어떤 기계 학습 알고리즘을 적용하기에 가장 좋은지 결정할 수 없기 때문에 다양한 알고리즘(약 10개)을 적용해보기로 하였다.
+- 여러 가지 다른 알고리즘을 통해 훈련하고 어떤 효과가 가장 좋은지 비교하고 상위 3개로 추려보고자 한다.
+
+<img width="510" alt="image" src="https://github.com/rud15dns/aix_project/assets/90837976/9d994548-47db-4fd0-aec2-e0be4a4995c4">
+
+-  본 훈련에 사용된 10개 모델 중 경사도 상승 결정 트리, 에이다부스트, 랜덤 포레스트의 3개 모델의 정확도가 85% 이상으로 양호함을 알 수 있으며 F1 값도 다른 모델에 비해 우수한 수준이기 때문에 지표의 관점에서 이 세 모델이 본 논문에서 연구한 문제에 더 적합합니다.
+
 ## IV. Evaluation & Analysis
 - Graphs, tables, any statistics (if any)
 ## V. Related Work (e.g., existing studies)
