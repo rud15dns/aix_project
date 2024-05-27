@@ -18,6 +18,18 @@
 - adult.names : 데이터 세트의 설명과 데이터 세트의 다양한 지표에 대한 설명이 포함
 - adult.test, adult.data :  adult.data와 adult.test는 데이터 세트의 작성자를 위한 훈련 세트와 테스트 세트로 구분되며, 데이터의 분류 및 분석을 용이하게 하기 위해 본 논문에서는 adult.data와 adult.test의 두 데이터 세트를 통합하여 모델을 훈련할 때 훈련 세트와 테스트 세트를 재분할하였다.
 
+```ruby
+#데이터의 헤더 정의
+headers = ['age', 'workclass', 'final-weight', 'education', 'education-num', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'capital-gain', 'capital-loss', 'hours-per-week', 'country','income-level']
+#데이터 훈련 세트
+adult_data = pd.read_csv('adult.data',header=None,names=headers,sep=',\s',na_values=["?"],engine='python')
+#데이터 테스트 세트
+adult_test = pd.read_csv('adult.test',header=None,names=headers,sep=',\s',na_values=["?"], engine='python',skiprows=1)
+dataset = pd.concat([adult_data, adult_test], ignore_index=True) # 두 데이터 세트 병합
+# 가져올 때 두 데이터 세트에 인덱스를 추가했기 때문에 기존 인덱스를 제거하고, 병합된 모든 데이터에 대해 새로운 순차적 인덱스를 부여합니다. 
+dataset.reset_index(inplace=True, drop=True)
+```
+
 - 이 기사에 사용된 데이터 세트에는 총 48,842개의 샘플 15개의 지표가 포함되어 있습니다. 15개 지표 중 6개 지표는 연속형 지표이고 나머지 9개 지표는 이산형 지표로 명칭과 속성은 아래 표와 같다.
 
 - 
