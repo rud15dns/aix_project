@@ -48,9 +48,66 @@ country	        국적	        이산형	"United-States(미국), Cambodia(캄보
 - 우리는 데이터의 다양한 유형을 알고 있지만 어떤 기계 학습 알고리즘을 적용하기에 가장 좋은지 결정할 수 없기 때문에 다양한 알고리즘(약 10개)을 적용해보기로 하였다.
 - 여러 가지 다른 알고리즘을 통해 훈련하고 어떤 효과가 가장 좋은지 비교하고 상위 3개로 추려보고자 한다.
 
+```ruby
+# Gradient Boosting Trees 그레이디언트업 의사결정 트리 
+start_time = time.time()  
+train_pred_gbt, test_pred_gbt, acc_gbt, acc_cv_gbt, probs_gbt= fit_ml_algo(GradientBoostingClassifier(),   
+              x_train,   
+              y_train,   
+              x_test,   
+              10)  
+gbt_time = (time.time() - start_time)  
+print("Accuracy: %s" % acc_gbt)  
+print("Accuracy CV 10-Fold: %s" % acc_cv_gbt)  
+print("Running Time: %s s" % datetime.timedelta(seconds=gbt_time).seconds)  
+```
+
+
+```ruby
+# 로지스틱 회귀
+# 하이퍼파라미터 설정 및 랜덤 서치 생성
+n_iter_search = 10  # 10번 훈련, 값이 클수록 매개변수 정확도가 높아지지만 검색 시간이 더 오래 걸립니다.
+param_dist = {'penalty': ['l2', 'l1'], 
+              'class_weight': [None, 'balanced'],
+              'C': np.logspace(-20, 20, 10000), 
+              'intercept_scaling': np.logspace(-20, 20, 10000)} 
+random_search = RandomizedSearchCV(LogisticRegression(),  # 사용할 분류기
+                                   n_jobs=-1,  # 모든 CPU를 사용하여 훈련합니다. 기본값은 1로 1개의 CPU를 사용합니다.
+                                   param_distributions=param_dist,
+                                   n_iter=n_iter_search)  # 훈련 횟수
+start = time.time()
+random_search.fit(x_train, y_train)
+print("RandomizedSearchCV took %.2f seconds for %d candidates"
+      " parameter settings." % ((time.time() - start), n_iter_search))
+report(random_search.cv_results_)
+
+```
+
+
+```ruby
+
+# AdaBoost Classifier  
+start_time = time.time()  
+train_pred_adb, test_pred_adb, acc_adb, acc_cv_adb, probs_adb= fit_ml_algo(AdaBoostClassifier(),   
+              x_train,   
+              y_train,   
+              x_test,   
+              10)  
+adb_time = (time.time() - start_time)  
+print("Accuracy: %s" % acc_adb)  
+print("Accuracy CV 10-Fold: %s" % acc_cv_adb)  
+print("Running Time: %s s" % datetime.timedelta(seconds=adb_time).seconds)  
+
+```
+
+
+
+
+
+
 <img width="510" alt="image" src="https://github.com/rud15dns/aix_project/assets/90837976/9d994548-47db-4fd0-aec2-e0be4a4995c4">
 
--  본 훈련에 사용된 10개 모델 중 경사도 상승 결정 트리, 에이다부스트, 랜덤 포레스트의 3개 모델의 정확도가 85% 이상으로 양호함을 알 수 있으며 F1 값도 다른 모델에 비해 우수한 수준이기 때문에 지표의 관점에서 이 세 모델이 본 논문에서 연구한 문제에 더 적합합니다.
+-  본 훈련에 사용된 10개 모델 중 경사도 상승 결정 트리, 에이다부스트, 랜덤 포레스트의 3개 모델의 정확도가 85% 이상으로 양호함을 알 수 있으며 F1 값도 다른 모델에 비해 우수한 수준이기 때문에 지표의 관점에서 이 세 모델이 본 논문에서 연구한 문제에 더 적합하다고 판단하였다.
 
 ## IV. Evaluation & Analysis
 - Graphs, tables, any statistics (if any)
