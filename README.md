@@ -55,6 +55,53 @@ hours-per-week	주당             근로시연속형	-
 country	        국적	        이산형	"United-States(미국), Cambodia(캄보디아), England(영국), Puerto-Rico(푸에르토리코), Canada(캐나다), Germany(독일), Outlying-US(Guam-USVI-etc) (미국 해외 속지), India(인도), Japan(일본), Greece(그리스), South(남미), China(중국), Cuba(쿠바), Iran(이란), Honduras(온두라스), Philippines(필리핀), Italy(이탈리아), Poland(폴란드), Jamaica(자메이카),Vietnam(베트남), Mexico(멕시코), Portugal(포르투갈), Ireland(아일랜드), France(프랑스), Dominican-Republic(도미니카 공화국), Laos(라오스), Ecuador(에콰도르), Taiwan(대만), Haiti(아이티), Columbia(콜롬비아), Hungary(헝가리), Guatemala(과테말라), Nicaragua(니카라과), Scotland(스코틀랜드), Thailand(태국), Yugoslavia(유고슬라비아), El-Salvador(엘살바도르)"
 
 ```
+- 데이터셋에서 누락된 데이터가 있는지 python의 'missingno' 라이브러리를 사용하여 확인합니다.
+```ruby
+missingno.matrix(dataset, figsize = (20,5))
+missingno.bar(dataset, sort='ascending', figsize = (20,5))
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/6f84d3dc-a047-4b3e-9bfe-c5a0bac7d86e)
+
+- 데이터셋에서 누락된 데이터가 있는지 확인합니다. (추후 사진 첨부 필요)
+```ruby
+dataset.dropna(axis=0, how='any', inplace=True)  
+dataset.describe(include='all')
+```
+- 훈련 세트와 테스트 세트에서 연수입 지표 나타내는 표기가 달라 표기 방식을 통일합니다.
+- 필요없는 final-weight 지표를 삭제합니다. (나중에 이유 쓸 수 있으면 쓰면 좋을 것 같습니다)
+```ruby
+dataset.loc[dataset['income-level'] == '>50K.', 'income-level'] = '>50K'  
+dataset.loc[dataset['income-level'] == '<=50K.', 'income-level'] = '<=50K'
+# final-weight 지표 삭제  
+dataset = dataset.drop(['final-weight'],axis=1)  
+```
+- 각 변수에 대한 분포를 시각화합니다. 그래프의 종류는 변수의 데이터 유형이 수치형인지 범주형인지에 따라 정의됩니다.
+- 범주형 데이터인 경우, 각 변수에 대한 빈도수를 세로 막대 그래프로 그립니다.
+- 수치형 데이터인 경우, 히스토그램과 KDE 그래포로 그립니다. 
+```ruby
+# 각 변수의 분포 상태 그리기  
+def plot_distribution(dataset, cols, width, height, hspace, wspace):  
+    plt.style.use('seaborn-whitegrid')  
+    fig = plt.figure(figsize=(width,height))  
+    fig.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=wspace, hspace=hspace)  
+    rows = math.ceil(float(dataset.shape[1]) / cols)  
+    for i, column in enumerate(dataset.columns):  
+        ax = fig.add_subplot(rows, cols, i + 1)  
+        ax.set_title(column)  
+        if dataset.dtypes[column] == np.object:  
+            g = sns.countplot(y=column, data=dataset)  
+            substrings = [s.get_text()[:18] for s in g.get_yticklabels()]  
+            g.set(yticklabels=substrings)  
+            plt.xticks(rotation=25)  
+        else:  
+            g = sns.distplot(dataset[column])  
+            plt.xticks(rotation=25)  
+      
+plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/c3be7e22-ebd2-40a6-be17-24e6de624a43)
+
+
 ## III. Methodology
 - Explaining your choice of algorithms (methods) - Explaining features (if any)
 - 우리는 데이터의 다양한 유형을 알고 있지만 어떤 기계 학습 알고리즘을 적용하기에 가장 좋은지 결정할 수 없기 때문에 다양한 알고리즘(약 10개)을 적용해보기로 하였다.
