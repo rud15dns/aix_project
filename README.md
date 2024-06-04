@@ -1,9 +1,10 @@
 ## Title :인구센서스 데이터를 활용한 소득 예측 모델 구축
 ## Members: 
 - 손주희 | ICT융합학부 | star7613@naver.com
-- 진수림
-- 김채원
-- 이상엽
+- 진수림 | 인공지능학과 | sl695969@outlook.com
+- 김채원 | ICT융합학부 | rud14dns@hanyang.ac.kr
+- 이상엽 | 화학공학과  | ben20141220@gmail.com
+
 
 
 
@@ -81,16 +82,6 @@ dataset.dropna(axis=0, how='any', inplace=True)
 dataset.describe(include='all')
 ```
 
-
-***빼도 될 것 같은데 어케 생각...??
-- 훈련 세트와 테스트 세트에서 연수입 지표 나타내는 표기가 달라 표기 방식을 통일합니다 
-- 필요없는 final-weight 지표를 삭제합니다. (나중에 이유 쓸 수 있으면 쓰면 좋을 것 같습니다)
-```ruby
-dataset.loc[dataset['income-level'] == '>50K.', 'income-level'] = '>50K'  
-dataset.loc[dataset['income-level'] == '<=50K.', 'income-level'] = '<=50K'
-# final-weight 지표 삭제  
-dataset = dataset.drop(['final-weight'],axis=1)  
-```
 - 각 변수에 대한 분포를 시각화합니다. 그래프의 종류는 변수의 데이터 유형이 수치형인지 범주형인지에 따라 정의됩니다.
 - 범주형(이산형) 데이터인 경우, 각 변수에 대한 빈도수를 세로 막대 그래프로 그립니다.
 - 수치형(연속형) 데이터인 경우, 히스토그램과 KDE 그래포로 그립니다. 
@@ -117,19 +108,41 @@ plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/c3be7e22-ebd2-40a6-be17-24e6de624a43)
 
-- 변수 간의 상관 관계 검사를 위한 종속변수와 독립변수의 분리 ( 데이터에 따른 income-level(소득수준)의 변화)
+- 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인핣니다.
+
 ```ruby
-# 분할 독립 변수와 종속 변수 
-y_data=dataset_num['income-level']  # 소득수준income-level열   종속변수
+ #변수 간의 상관 관계 검사
+plt.style.use('seaborn-whitegrid')  
+fig = plt.figure(figsize=(15, 15))   
+  
+mask = np.zeros_like(dataset_num.corr(), dtype=np.bool)  
+mask[np.triu_indices_from(mask)] = True  
+sns.heatmap(dataset_num.corr(), vmin=-1, vmax=1, square=True,   
+            cmap=sns.color_palette("RdBu_r", 100),   
+            mask=mask, annot=True, linewidths=.5);  
+
+```
+  
+  ![image](https://github.com/rud15dns/aix_project/assets/90837976/c10b4a5c-662d-42e6-b457-0890b6d3035d)
+  >데이터에 따른 income-level(소득수준)의 변화를 확인 할 수 있습니다.
+
+- 모델 훈련 준비
+ 
+
+-  데이터셋에 x_data에는   'income-level' 열을 제외한 나머지 열들을 독립 변수 즉 입력 값들로 설정하고 y_data에는 종속 변수인 'income-level' 열을 저장합니다.
+
+```ruby
+#  독립 변수와 종속 변수를 분리
 x_data=dataset_num.drop(['income-level'],axis=1)  # 소득수준 income-level 열을 제외한 나머지 열을 X_data로  독립변수
+y_data=dataset_num['income-level']  # 소득수준income-level열   종속변수
 
 ```
 
-- 모델 학습 준비
-- 훈련 세트와 테스트 세트를 분할
+
+- 모델을 훈련시키기 위해 필요한 입력 데이터(x_data)와 예측해야 하는 목표 값(y_data)을 분리해 줍니다.
 
 ```ruby
-# 훈련 세트와 테스트 세트를 분할하다.  
+# 훈련 세트와 테스트 세트를 분할
 x_train,x_test,y_train,y_test = train_test_split(  
     x_data,  
     y_data,  
@@ -139,13 +152,21 @@ x_train,x_test,y_train,y_test = train_test_split(
 
 ```
 
-  ----수정 ing,...
 
 
 ## III. Methodology
 - Explaining your choice of algorithms (methods) - Explaining features (if any)
-- 우리는 데이터의 다양한 유형을 알고 있지만 어떤 기계 학습 알고리즘을 적용하기에 가장 좋은지 결정할 수 없기 때문에 다양한 알고리즘(약 10개)을 적용해보기로 하였다.
-- 여러 가지 다른 알고리즘을 통해 훈련하고 어떤 효과가 가장 좋은지 비교하고 상위 3개로 추려보고자 한다.
+- 우리는 데이터의 다양한 유형을 알고 있지만 어떤 기계 학습 알고리즘을 적용하기에 가장 좋은지 결정할 수 없기 때문에 다양한 알고리즘(약 10개)을 적용해보기로 하였습니다.
+- 여러 가지 다른 알고리즘을 통해 훈련하고 어떤 효과가 가장 좋은지 비교하고 상위 3개로 추려보고자 합니다.
+
+- 다양한 머신러닝 알고리즘을 쉽게 실험하고, 그 성능을 비교할 수 있도록 함수를 설계합니다. 사용자는 이 함수를 호출할 때, 다양한 머신러닝 알고리즘 객체와 함께 훈련 및 검증 데이터를 전달하기만 하면 됩니다.
+```ruby
+
+
+```
+
+
+
 
 ```ruby
 # Gradient Boosting Trees 그레이디언트업 의사결정 트리 
