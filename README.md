@@ -1,6 +1,11 @@
 ## Title :인구센서스 데이터를 활용한 소득 예측 모델 구축
 ## Members: 
-- 손주희 진수림 김채원 이상엽
+- 손주희 | ICT융합학부 | star7613@naver.com
+- 진수림
+- 김채원
+- 이상엽
+
+
 
 ## I. Proposal (Option 1 or 2) – This should be filled by sometime in early May.
 - Motivation: Why are you doing this? - What do you want to see at the end?
@@ -12,25 +17,29 @@
 
 ## II. Datasets
 - Describing your dataset
-- 소득에 영향을 미치는 요인은 복잡하고 다양하며 개인뿐만 아니라 가족, 심지어 국가의 다양한 요인에 의해 영향을 받으며 관련된 지표의 수가 방대하고 얻기 어려우며 모델 및 분석 과정을 단순화하기 위해 데이터는 UCI Machine Learning Repository 웹 사이트의 Adult Data Set 데이터 세트(https://archive.ics.uci.edu/ml/datasets/adult )에서 가져오기로 하였다.
+- 소득에 영향을 미치는 요인은 복잡하고 다양하며 개인뿐만 아니라 가족, 심지어 국가의 다양한 요인에 의해 영향을 받으며 관련된 지표의 수가 방대하고 얻기 어려우며 모델 및 분석 과정을 단순화하기 위해 데이터는 UCI Machine Learning Repository 웹 사이트의 Adult Data Set 데이터 세트(https://archive.ics.uci.edu/ml/datasets/adult )에서 가져오기로 하였습니다.
 - adult.names : 데이터 세트의 설명과 데이터 세트의 다양한 지표에 대한 설명이 포함
-- adult.test, adult.data :  adult.data와 adult.test는 데이터 세트의 작성자를 위한 훈련 세트와 테스트 세트로 구분되며, 데이터의 분류 및 분석을 용이하게 하기 위해 본 논문에서는 adult.data와 adult.test의 두 데이터 세트를 통합하여 모델을 훈련할 때 훈련 세트와 테스트 세트를 재분할하였다.
+- adult.data, adult.test :  adult.data와 adult.test는  훈련 세트와 테스트 세트로 구분되며, 데이터의 분류 및 분석을 용이하게 하기 위해 본 논문에서는 adult.data와 adult.test의 두 데이터 세트를 통합하여 모델을 훈련할 때 훈련 세트와 테스트 세트를 재분할하였습니다.
 
 ```ruby
-#데이터의 헤더 정의
+#데이터의 헤더 정의(인자/지표 이름 정의)
 headers = ['age', 'workclass', 'final-weight', 'education', 'education-num', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'capital-gain', 'capital-loss', 'hours-per-week', 'country','income-level']
+
 #데이터 훈련 세트
 adult_data = pd.read_csv('adult.data',header=None,names=headers,sep=',\s',na_values=["?"],engine='python')
+
 #데이터 테스트 세트
 adult_test = pd.read_csv('adult.test',header=None,names=headers,sep=',\s',na_values=["?"], engine='python',skiprows=1)
-dataset = pd.concat([adult_data, adult_test], ignore_index=True) # 두 데이터 세트 병합
-# 가져올 때 두 데이터 세트에 인덱스를 추가했기 때문에 기존 인덱스를 제거하고, 병합된 모든 데이터에 대해 새로운 순차적 인덱스를 부여합니다. 
+
+# 두 데이터 세트 병합
+dataset = pd.concat([adult_data, adult_test], ignore_index=True) 
+# 가져올 때 두 데이터 세트에 인덱스를 추가했기 때문에 병합된 DataFrame에 대해 새로운 순차적 인덱스를 부여합니다. 
 dataset.reset_index(inplace=True, drop=True)
 ```
 
-- 이 기사에 사용된 데이터 세트에는 총 48,842개의 샘플 15개의 지표가 포함되어 있습니다. 15개 지표 중 6개 지표는 연속형 지표이고 나머지 9개 지표는 이산형 지표로 명칭과 속성은 아래 표와 같다.
+- 이 기사에 사용된 데이터 세트에는 총 48,842개의 샘플 15개의 지표가 포함되어 있습니다. 15개 지표 중 6개 지표는 연속형 지표이고 나머지 9개 지표는 이산형 지표로 명칭과 속성은 아래 표와 같습니다.
 
-- 
+  
 ```
 [데이터 테이블]
 
@@ -58,14 +67,23 @@ country	        국적	        이산형	"United-States(미국), Cambodia(캄보
 missingno.matrix(dataset, figsize = (20,5))
 missingno.bar(dataset, sort='ascending', figsize = (20,5))
 ```
+
+![image](https://github.com/rud15dns/aix_project/assets/90837976/d2b5d9fa-2b5b-40ea-8b79-2857dfeb1c3a)
+
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/6f84d3dc-a047-4b3e-9bfe-c5a0bac7d86e)
 
-- 데이터셋에서 누락된 데이터가 있는지 확인합니다. (추후 사진 첨부 필요)
+> 데이터셋에서 누락된 데이터가 있는지 확인합니다.
+  -> 'workclass','occupation','country' 부분에 누락된 데이터가 일부 존재한다는 것을 확인 할 수 있습니다.
+
+- 데이터의 무결성을 위해 결측값이 포함된 행을 제거합니다
 ```ruby
 dataset.dropna(axis=0, how='any', inplace=True)  
 dataset.describe(include='all')
 ```
-- 훈련 세트와 테스트 세트에서 연수입 지표 나타내는 표기가 달라 표기 방식을 통일합니다.
+
+
+***빼도 될 것 같은데 어케 생각...??
+- 훈련 세트와 테스트 세트에서 연수입 지표 나타내는 표기가 달라 표기 방식을 통일합니다 
 - 필요없는 final-weight 지표를 삭제합니다. (나중에 이유 쓸 수 있으면 쓰면 좋을 것 같습니다)
 ```ruby
 dataset.loc[dataset['income-level'] == '>50K.', 'income-level'] = '>50K'  
@@ -74,8 +92,8 @@ dataset.loc[dataset['income-level'] == '<=50K.', 'income-level'] = '<=50K'
 dataset = dataset.drop(['final-weight'],axis=1)  
 ```
 - 각 변수에 대한 분포를 시각화합니다. 그래프의 종류는 변수의 데이터 유형이 수치형인지 범주형인지에 따라 정의됩니다.
-- 범주형 데이터인 경우, 각 변수에 대한 빈도수를 세로 막대 그래프로 그립니다.
-- 수치형 데이터인 경우, 히스토그램과 KDE 그래포로 그립니다. 
+- 범주형(이산형) 데이터인 경우, 각 변수에 대한 빈도수를 세로 막대 그래프로 그립니다.
+- 수치형(연속형) 데이터인 경우, 히스토그램과 KDE 그래포로 그립니다. 
 ```ruby
 # 각 변수의 분포 상태 그리기  
 def plot_distribution(dataset, cols, width, height, hspace, wspace):  
@@ -98,6 +116,30 @@ def plot_distribution(dataset, cols, width, height, hspace, wspace):
 plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/c3be7e22-ebd2-40a6-be17-24e6de624a43)
+
+- 변수 간의 상관 관계 검사를 위한 종속변수와 독립변수의 분리 ( 데이터에 따른 income-level(소득수준)의 변화)
+```ruby
+# 분할 독립 변수와 종속 변수 
+y_data=dataset_num['income-level']  # 소득수준income-level열   종속변수
+x_data=dataset_num.drop(['income-level'],axis=1)  # 소득수준 income-level 열을 제외한 나머지 열을 X_data로  독립변수
+
+```
+
+- 모델 학습 준비
+- 훈련 세트와 테스트 세트를 분할
+
+```ruby
+# 훈련 세트와 테스트 세트를 분할하다.  
+x_train,x_test,y_train,y_test = train_test_split(  
+    x_data,  
+    y_data,  
+    test_size=0.2,  
+    random_state=1,  
+    stratify=y_data)  
+
+```
+
+  ----수정 ing,...
 
 
 ## III. Methodology
@@ -168,6 +210,10 @@ print("Running Time: %s s" % datetime.timedelta(seconds=adb_time).seconds)
 
 ## IV. Evaluation & Analysis
 - Graphs, tables, any statistics (if any)
+- ![image](https://github.com/rud15dns/aix_project/assets/90837976/411f5d56-b5eb-4400-a904-c168e9d5cb9c)
+- ![image](https://github.com/rud15dns/aix_project/assets/90837976/82da2d30-1275-48e7-b231-fc1f1d267e32)
+
+
 ## V. Related Work (e.g., existing studies)
 - Tools, libraries, blogs, or any documentation that you have used to do this project.
 ## VI. Conclusion: Discussion
