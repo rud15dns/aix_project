@@ -119,7 +119,8 @@ plt.style.use('seaborn-whitegrid')
 plt.figure(figsize=(15, 4))   
 sns.countplot(y="workclass", data=dataset);
 ```
-![image](https://github.com/rud15dns/aix_project/assets/113186906/d9ae9469-cfcd-4e27-8971-acd10c5aa3aa)
+![image](https://github.com/rud15dns/aix_project/assets/113186906/a84511cc-928c-4b67-811b-6dfa91a68cac)
+
 
 - 위의 막대 그래프에서 민간 작업이 표본에서 차지하는 비중이 상대적으로 크고 비작업 및 비수입 작업 표본의 수는 매우 적음을 확인하였습니다.
 - 해당 동향을 파악하여 비슷한 범주를 통합함으로써 5가지 범주로 요약하였습니다.
