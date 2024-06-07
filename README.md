@@ -1,4 +1,5 @@
 ## Title :인구센서스 데이터를 활용한 소득 예측 모델 구축
+>AI+X 딥러닝 Final Project
 ## Members: 
 - 손주희 | ICT융합학부 | star7613@naver.com
 - 진수림 | 인공지능학과 | sl695969@outlook.com
