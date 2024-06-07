@@ -121,6 +121,38 @@ sns.countplot(y="workclass", data=dataset);
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/d9ae9469-cfcd-4e27-8971-acd10c5aa3aa)
 
+```ruby
+#위의 막대 그래프에서 민간 작업이 표본에서 차지하는 비중이 상대적으로 크고 비작업 및 비수입 작업 표본의 수는 매우 적음을 알 수 있으며 실제 상황에 따라 5가지 범주로 요약됩니다.
+
+#workclass 열의 값을 그룹화하여 범주 수를 줄입니다.
+#비작업 및 비수입 작업을 'Not Working'으로 변경합니다.
+#'Without-pay'와 'Never-worked' 범주는 모두 비작업 상태를 나타내므로 하나의 범주로 통합됩니다.
+dataset.loc[dataset['workclass'] == 'Without-pay', 'workclass'] = 'Not Working'  
+dataset.loc[dataset['workclass'] == 'Never-worked', 'workclass'] = 'Not Working'
+
+#연방 정부 작업을 'Fed-gov'로 변경합니다.
+#연방 정부의 작업을 나타내는 범주를 간소화합니다.
+dataset.loc[dataset['workclass'] == 'Federal-gov', 'workclass'] = 'Fed-gov'
+
+#정부 및 지방 정부의 작업을 'Non-fed-gov'로 변경합니다. 두 범주를 하나로 통합합니다.
+dataset.loc[dataset['workclass'] == 'State-gov', 'workclass'] = 'Non-fed-gov'  
+dataset.loc[dataset['workclass'] == 'Local-gov', 'workclass'] = 'Non-fed-gov'
+
+#프리랜서 작업을 'Self-emp'로 변경합니다. 프리랜서 비기업과 프리랜서 기업을 하나의 범주로 통합합니다.
+dataset.loc[dataset['workclass'] == 'Self-emp-not-inc', 'workclass'] = 'Self-emp'  
+dataset.loc[dataset['workclass'] == 'Self-emp-inc', 'workclass'] = 'Self-emp'
+
+#민간 작업 범주의 값을 유지합니다. 
+dataset.loc[dataset['workclass'] == ' Private', 'workclass'] = ' Private'  
+
+plt.style.use('seaborn-whitegrid')  
+fig = plt.figure(figsize=(15, 4))
+#막대 그래프로 그립니다. 
+sns.countplot(y="workclass", data=dataset);
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/bb76049a-e374-4b83-856d-c6b0f1f3a348)
+
+
 - 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인합니다.
 
 ```ruby
@@ -133,8 +165,9 @@ mask[np.triu_indices_from(mask)] = True
 sns.heatmap(dataset_num.corr(), vmin=-1, vmax=1, square=True,   
             cmap=sns.color_palette("RdBu_r", 100),   
             mask=mask, annot=True, linewidths=.5);  
-
 ```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/661e09af-459f-4b3d-8279-f2e790de38e2)
+
   
   ![image](https://github.com/rud15dns/aix_project/assets/90837976/c10b4a5c-662d-42e6-b457-0890b6d3035d)
   >데이터에 따른 income-level(소득수준)의 변화를 확인 할 수 있습니다.
