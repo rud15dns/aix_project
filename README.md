@@ -109,7 +109,19 @@ plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/c3be7e22-ebd2-40a6-be17-24e6de624a43)
 
-- 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인핣니다.
+``` ruby
+#이 데이터 세트에서 작업 유형(Workclass) 지표에는 민간(Private), 프리랜서 비기업(Self-emp-not-inc), 
+#프리랜서 기업(Self-emp-inc), 연방 정부(Federal-gov), 지방 정부(Local-gov), 주 정부(State-gov), 무급(Without-pay), 
+#무직 경험(Never-worked)의 8가지 유형이 있습니다.
+#workclass 열에 대한 각 유형의 샘플 수를 한눈에 보기 위하여 막대차트로 확인합니다.
+#데이터의 분포를 한눈에 파악합니다. 
+plt.style.use('seaborn-whitegrid')  
+plt.figure(figsize=(15, 4))   
+sns.countplot(y="workclass", data=dataset);
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/d9ae9469-cfcd-4e27-8971-acd10c5aa3aa)
+
+- 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인합니다.
 
 ```ruby
  #변수 간의 상관 관계 검사
