@@ -154,6 +154,8 @@ sns.countplot(y="workclass", data=dataset);
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/bb76049a-e374-4b83-856d-c6b0f1f3a348)
 
+#### 여기서부터 다시 수정해야함 ####
+
 
 - 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인합니다.
 
