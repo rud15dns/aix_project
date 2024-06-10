@@ -33,6 +33,8 @@
 
 ## II. Datasets
 
+### [1] 데이터 가져오기
+
 - 소득에 영향을 미치는 요인은 복잡하고 다양하며 개인뿐만 아니라 가족, 심지어 국가의 다양한 요인에 의해 영향을 받으며 관련된 지표의 수가 방대하고 얻기 어렵기 떄문에 모델 및 분석 과정을 단순화하기 위해 데이터는 UCI Machine Learning Repository 웹 사이트의 Adult Data Set 데이터 세트(https://archive.ics.uci.edu/ml/datasets/adult )에서 가져오기로 하였습니다.
 
 - adult.names : 데이터 세트의 설명과 데이터 세트의 다양한 지표에 대한 설명이 포함되어있습니다.
@@ -80,7 +82,7 @@ country	        국적	        이산형	"United-States(미국), Cambodia(캄보
 
 ```
 <br/><br/>  
-### 데이터 전처리 - 결측 값 처리<br/>  
+### [2] 데이터 전처리 - 결측 값 처리<br/>  
 - 데이터셋에서 누락된 데이터가 있는지 python의 'missingno' 라이브러리를 사용하여 확인합니다.
 ```ruby
 missingno.matrix(dataset, figsize = (20,5))
@@ -102,8 +104,233 @@ missingno.bar(dataset, sort='ascending', figsize = (20,5))
 dataset.dropna(axis=0, how='any', inplace=True)  
 dataset.describe(include='all')
 ```
-<br/><br/>  
-### 각 변수의 분포 시각화
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>workclass</th>
+      <th>final-weight</th>
+      <th>education</th>
+      <th>education-num</th>
+      <th>marital-status</th>
+      <th>occupation</th>
+      <th>relationship</th>
+      <th>race</th>
+      <th>sex</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+      <th>country</th>
+      <th>income-level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>45222.000000</td>
+      <td>45222</td>
+      <td>4.522200e+04</td>
+      <td>45222</td>
+      <td>45222.000000</td>
+      <td>45222</td>
+      <td>45222</td>
+      <td>45222</td>
+      <td>45222</td>
+      <td>45222</td>
+      <td>45222.000000</td>
+      <td>45222.000000</td>
+      <td>45222.000000</td>
+      <td>45222</td>
+      <td>45222</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>NaN</td>
+      <td>7</td>
+      <td>NaN</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>7</td>
+      <td>14</td>
+      <td>6</td>
+      <td>5</td>
+      <td>2</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>41</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>NaN</td>
+      <td>Private</td>
+      <td>NaN</td>
+      <td>HS-grad</td>
+      <td>NaN</td>
+      <td>Married-civ-spouse</td>
+      <td>Craft-repair</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>United-States</td>
+      <td>&lt;=50K</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>NaN</td>
+      <td>33307</td>
+      <td>NaN</td>
+      <td>14783</td>
+      <td>NaN</td>
+      <td>21055</td>
+      <td>6020</td>
+      <td>18666</td>
+      <td>38903</td>
+      <td>30527</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>41292</td>
+      <td>22654</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>38.547941</td>
+      <td>NaN</td>
+      <td>1.897347e+05</td>
+      <td>NaN</td>
+      <td>10.118460</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1101.430344</td>
+      <td>88.595418</td>
+      <td>40.938017</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>13.217870</td>
+      <td>NaN</td>
+      <td>1.056392e+05</td>
+      <td>NaN</td>
+      <td>2.552881</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>7506.430084</td>
+      <td>404.956092</td>
+      <td>12.007508</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>17.000000</td>
+      <td>NaN</td>
+      <td>1.349200e+04</td>
+      <td>NaN</td>
+      <td>1.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>28.000000</td>
+      <td>NaN</td>
+      <td>1.173882e+05</td>
+      <td>NaN</td>
+      <td>9.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>40.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>37.000000</td>
+      <td>NaN</td>
+      <td>1.783160e+05</td>
+      <td>NaN</td>
+      <td>10.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>40.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>47.000000</td>
+      <td>NaN</td>
+      <td>2.379260e+05</td>
+      <td>NaN</td>
+      <td>13.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>45.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>90.000000</td>
+      <td>NaN</td>
+      <td>1.490400e+06</td>
+      <td>NaN</td>
+      <td>16.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>99999.000000</td>
+      <td>4356.000000</td>
+      <td>99.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br/><br/> 
+
+### [3] 각 변수의 분포 시각화
 - 각 변수에 대한 분포를 시각화합니다. 그래프의 종류는 변수의 데이터 유형이 수치형인지 범주형인지에 따라 정의됩니다.
 ```ruby
 # 각 변수의 분포 상태 그리기  
@@ -132,7 +359,33 @@ plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 
 <br/><br/>  
 
+### [4] 변수의 범주 단순화
+- 데이터셋 내의 범주형 변수를 더 일반적이고 일관성 있는 범주로 변환합니다.<br/><br/>
 
+-  데이터 셋 'workclass' 의 범주 단순화
+  
+```ruby
+#위의 막대 그래프에서 민간 작업이 표본에서 차지하는 비중이 상대적으로 크고 비작업 및 비수입 작업 표본의 수는 매우 적음을 알 수 있으며 실제 상황에 따라 5가지 범주로 요약됩니다.
+dataset.loc[dataset['workclass'] == 'Without-pay', 'workclass'] = 'Not Working'  
+dataset.loc[dataset['workclass'] == 'Never-worked', 'workclass'] = 'Not Working'  
+dataset.loc[dataset['workclass'] == 'Federal-gov', 'workclass'] = 'Fed-gov'  
+dataset.loc[dataset['workclass'] == 'State-gov', 'workclass'] = 'Non-fed-gov'  
+dataset.loc[dataset['workclass'] == 'Local-gov', 'workclass'] = 'Non-fed-gov'  
+dataset.loc[dataset['workclass'] == 'Self-emp-not-inc', 'workclass'] = 'Self-emp'  
+dataset.loc[dataset['workclass'] == 'Self-emp-inc', 'workclass'] = 'Self-emp'  
+dataset.loc[dataset['workclass'] == ' Private', 'workclass'] = ' Private'  
+
+plt.style.use('seaborn-whitegrid')  
+fig = plt.figure(figsize=(15, 4))   
+sns.countplot(y="workclass", data=dataset); 
+
+
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/a84511cc-928c-4b67-811b-6dfa91a68cac)
+> - 위의 막대 그래프에서 민간 작업이 표본에서 차지하는 비중이 상대적으로 크고 비작업 및 비수입 작업 표본의 수는 매우 적음을 확인하였습니다.
+> - 해당 동향을 파악하여 비슷한 범주를 통합함으로써 5가지 범주로 요약하였습니다.
+
+<br/><br/>
 
 
 - 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인합니다.
