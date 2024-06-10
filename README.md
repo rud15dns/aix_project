@@ -1,27 +1,42 @@
 ## Title :인구센서스 데이터를 활용한 소득 예측 모델 구축
 >AI+X 딥러닝 Final Project
+
+
 ## Members: 
 - 손주희 | ICT융합학부 | star7613@naver.com
 - 진수림 | 인공지능학과 | sl695969@outlook.com
 - 김채원 | ICT융합학부 | rud14dns@hanyang.ac.kr
 - 이상엽 | 화학공학과  | ben20141220@gmail.com
 
+<br/>
+
+
+## I. Proposal (Option 1 )<br/>
+
+
+### Motivation (동기) :
+
+인구 센서스 데이터에는 가구 소득, 교육 수준, 직업 등 다양한 정보가 포함되어 있어 소득 수준을 예측할 수 있습니다. <br/>
+소득은 국민의 삶의 질과 국가의 경제 발전 정도를 나타내는 중요한 지표로, 소득 향상은 국가뿐만 아니라 개인에게도 중요한 목표입니다. <br/>
+또한, 기업들이 목표 소비자를 이해하고 정확한 마케팅 전략을 수립하는 데에도 큰 역할을 합니다. <br/>
+이러한 이유로 소득 측정의 중요성을 인식하고, 수업 시간에 배운 딥러닝 기법을 활용하여 인구 센서스 데이터를 기반으로 소득 예측 모델을 구축하고자 합니다.
 
 
 
-## I. Proposal (Option 1 or 2) – This should be filled by sometime in early May.
-- Motivation: Why are you doing this? - What do you want to see at the end?
 
-- Motivation :
-인구 센서스 데이터에는 가구 소득, 교육 수준, 직업 등 다양한 정보가 담겨 있어서 소득 수준을 예측할 수 있습니다. 소득은 국민의 삶의 질이 어떠한지, 국가의 경제가 어느정도 발전했는지를 나타내는 중요한 지표입니다. 소득을 향상시키는 것은 국가 뿐만 아니라 개인에게도 중요한 목표입니다.
-게다가, 소득에 영향을 미치는 요인을 파악하는 것은 국가뿐만 아니라 기업들이 목표 소비자를 이해하고 정확한 마케팅 전략을 수립하는 데에도 중요한 역할을 합니다. 따라서 우리는 이러한 이유로 인구 센서스 데이터를 활용하여 소득 예측 모델을 구축하고, 실제 데이터와 목표 변수 사이의 관계를 분석하여 최적의 모델을 찾고자 합니다.
+
+<br/>
+
+### project goal (프로젝트 목표) : 
+#### 소득 예측 모델을 구축하고 실제 데이터와 목표 변수 사이의 관계를 분석하여 최적의 모델을 찾고자 합니다.
 
 
 ## II. Datasets
-- Describing your dataset
-- 소득에 영향을 미치는 요인은 복잡하고 다양하며 개인뿐만 아니라 가족, 심지어 국가의 다양한 요인에 의해 영향을 받으며 관련된 지표의 수가 방대하고 얻기 어려우며 모델 및 분석 과정을 단순화하기 위해 데이터는 UCI Machine Learning Repository 웹 사이트의 Adult Data Set 데이터 세트(https://archive.ics.uci.edu/ml/datasets/adult )에서 가져오기로 하였습니다.
-- adult.names : 데이터 세트의 설명과 데이터 세트의 다양한 지표에 대한 설명이 포함
-- adult.data, adult.test :  adult.data와 adult.test는  훈련 세트와 테스트 세트로 구분되며, 데이터의 분류 및 분석을 용이하게 하기 위해 본 논문에서는 adult.data와 adult.test의 두 데이터 세트를 통합하여 모델을 훈련할 때 훈련 세트와 테스트 세트를 재분할하였습니다.
+
+- 소득에 영향을 미치는 요인은 복잡하고 다양하며 개인뿐만 아니라 가족, 심지어 국가의 다양한 요인에 의해 영향을 받으며 관련된 지표의 수가 방대하고 얻기 어렵기 떄문에 모델 및 분석 과정을 단순화하기 위해 데이터는 UCI Machine Learning Repository 웹 사이트의 Adult Data Set 데이터 세트(https://archive.ics.uci.edu/ml/datasets/adult )에서 가져오기로 하였습니다.
+
+- adult.names : 데이터 세트의 설명과 데이터 세트의 다양한 지표에 대한 설명이 포함되어있습니다.
+- adult.data, adult.test :  adult.data와 adult.test는 훈련 세트와 테스트 세트로 구분되며, 데이터의 분류 및 분석을 용이하게 하기 위해 본 내용에서는 adult.data와 adult.test의 두 데이터 세트를 통합하여 모델을 훈련할 때 훈련 세트와 테스트 세트를 재분할하였습니다. <br/><br/>
 
 ```ruby
 #데이터의 헤더 정의(인자/지표 이름 정의)
@@ -38,10 +53,10 @@ dataset = pd.concat([adult_data, adult_test], ignore_index=True)
 # 가져올 때 두 데이터 세트에 인덱스를 추가했기 때문에 병합된 DataFrame에 대해 새로운 순차적 인덱스를 부여합니다. 
 dataset.reset_index(inplace=True, drop=True)
 ```
+<br/><br/>  
 
 - 이 기사에 사용된 데이터 세트에는 총 48,842개의 샘플 15개의 지표가 포함되어 있습니다. 15개 지표 중 6개 지표는 연속형 지표이고 나머지 9개 지표는 이산형 지표로 명칭과 속성은 아래 표와 같습니다.
 
-  
 ```
 [데이터 테이블]
 
@@ -64,6 +79,8 @@ hours-per-week	주당             근로시연속형	-
 country	        국적	        이산형	"United-States(미국), Cambodia(캄보디아), England(영국), Puerto-Rico(푸에르토리코), Canada(캐나다), Germany(독일), Outlying-US(Guam-USVI-etc) (미국 해외 속지), India(인도), Japan(일본), Greece(그리스), South(남미), China(중국), Cuba(쿠바), Iran(이란), Honduras(온두라스), Philippines(필리핀), Italy(이탈리아), Poland(폴란드), Jamaica(자메이카),Vietnam(베트남), Mexico(멕시코), Portugal(포르투갈), Ireland(아일랜드), France(프랑스), Dominican-Republic(도미니카 공화국), Laos(라오스), Ecuador(에콰도르), Taiwan(대만), Haiti(아이티), Columbia(콜롬비아), Hungary(헝가리), Guatemala(과테말라), Nicaragua(니카라과), Scotland(스코틀랜드), Thailand(태국), Yugoslavia(유고슬라비아), El-Salvador(엘살바도르)"
 
 ```
+<br/><br/>  
+### 데이터 전처리 - 결측 값 처리<br/>  
 - 데이터셋에서 누락된 데이터가 있는지 python의 'missingno' 라이브러리를 사용하여 확인합니다.
 ```ruby
 missingno.matrix(dataset, figsize = (20,5))
@@ -77,15 +94,17 @@ missingno.bar(dataset, sort='ascending', figsize = (20,5))
 > 데이터셋에서 누락된 데이터가 있는지 확인합니다.
   -> 'workclass','occupation','country' 부분에 누락된 데이터가 일부 존재한다는 것을 확인 할 수 있습니다.
 
+<br/><br/>
+
+
 - 데이터의 무결성을 위해 결측값이 포함된 행을 제거합니다
 ```ruby
 dataset.dropna(axis=0, how='any', inplace=True)  
 dataset.describe(include='all')
 ```
-
+<br/><br/>  
+### 각 변수의 분포 시각화
 - 각 변수에 대한 분포를 시각화합니다. 그래프의 종류는 변수의 데이터 유형이 수치형인지 범주형인지에 따라 정의됩니다.
-- 범주형(이산형) 데이터인 경우, 각 변수에 대한 빈도수를 세로 막대 그래프로 그립니다.
-- 수치형(연속형) 데이터인 경우, 히스토그램과 KDE 그래포로 그립니다. 
 ```ruby
 # 각 변수의 분포 상태 그리기  
 def plot_distribution(dataset, cols, width, height, hspace, wspace):  
@@ -108,53 +127,12 @@ def plot_distribution(dataset, cols, width, height, hspace, wspace):
 plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/c3be7e22-ebd2-40a6-be17-24e6de624a43)
+> - 범주형(이산형) 데이터인 경우, 각 변수에 대한 빈도수를 세로 막대 그래프로 그립니다.
+> - 수치형(연속형) 데이터인 경우, 히스토그램과 KDE 그래포로 그립니다. 
 
-``` ruby
-#이 데이터 세트에서 작업 유형(Workclass) 지표에는 민간(Private), 프리랜서 비기업(Self-emp-not-inc), 
-#프리랜서 기업(Self-emp-inc), 연방 정부(Federal-gov), 지방 정부(Local-gov), 주 정부(State-gov), 무급(Without-pay), 
-#무직 경험(Never-worked)의 8가지 유형이 있습니다.
-#workclass 열에 대한 각 유형의 샘플 수를 한눈에 보기 위하여 막대차트로 확인합니다.
-#데이터의 분포를 한눈에 파악합니다. 
-plt.style.use('seaborn-whitegrid')  
-plt.figure(figsize=(15, 4))   
-sns.countplot(y="workclass", data=dataset);
-```
-![image](https://github.com/rud15dns/aix_project/assets/113186906/a84511cc-928c-4b67-811b-6dfa91a68cac)
+<br/><br/>  
 
 
-- 위의 막대 그래프에서 민간 작업이 표본에서 차지하는 비중이 상대적으로 크고 비작업 및 비수입 작업 표본의 수는 매우 적음을 확인하였습니다.
-- 해당 동향을 파악하여 비슷한 범주를 통합함으로써 5가지 범주로 요약하였습니다.
-```ruby
-
-#workclass 열의 값을 그룹화하여 범주 수를 줄입니다.
-#비작업 및 비수입 작업을 'Not Working'으로 변경합니다.
-#'Without-pay'와 'Never-worked' 범주는 모두 비작업 상태를 나타내므로 하나의 범주로 통합됩니다.
-dataset.loc[dataset['workclass'] == 'Without-pay', 'workclass'] = 'Not Working'  
-dataset.loc[dataset['workclass'] == 'Never-worked', 'workclass'] = 'Not Working'
-
-#연방 정부 작업을 'Fed-gov'로 변경합니다.
-#연방 정부의 작업을 나타내는 범주를 간소화합니다.
-dataset.loc[dataset['workclass'] == 'Federal-gov', 'workclass'] = 'Fed-gov'
-
-#정부 및 지방 정부의 작업을 'Non-fed-gov'로 변경합니다. 두 범주를 하나로 통합합니다.
-dataset.loc[dataset['workclass'] == 'State-gov', 'workclass'] = 'Non-fed-gov'  
-dataset.loc[dataset['workclass'] == 'Local-gov', 'workclass'] = 'Non-fed-gov'
-
-#프리랜서 작업을 'Self-emp'로 변경합니다. 프리랜서 비기업과 프리랜서 기업을 하나의 범주로 통합합니다.
-dataset.loc[dataset['workclass'] == 'Self-emp-not-inc', 'workclass'] = 'Self-emp'  
-dataset.loc[dataset['workclass'] == 'Self-emp-inc', 'workclass'] = 'Self-emp'
-
-#민간 작업 범주의 값을 유지합니다. 
-dataset.loc[dataset['workclass'] == ' Private', 'workclass'] = ' Private'  
-
-plt.style.use('seaborn-whitegrid')  
-fig = plt.figure(figsize=(15, 4))
-#막대 그래프로 그립니다. 
-sns.countplot(y="workclass", data=dataset);
-```
-![image](https://github.com/rud15dns/aix_project/assets/113186906/bb76049a-e374-4b83-856d-c6b0f1f3a348)
-
-#### 여기서부터 다시 수정해야함 ####
 
 
 - 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인합니다.
@@ -209,14 +187,64 @@ x_train,x_test,y_train,y_test = train_test_split(
 - 우리는 데이터의 다양한 유형을 알고 있지만 어떤 기계 학습 알고리즘을 적용하기에 가장 좋은지 결정할 수 없기 때문에 다양한 알고리즘(약 10개)을 적용해보기로 하였습니다.
 - 여러 가지 다른 알고리즘을 통해 훈련하고 어떤 효과가 가장 좋은지 비교하고 상위 3개로 추려보고자 합니다.
 
-- 다양한 머신러닝 알고리즘을 쉽게 실험하고, 그 성능을 비교할 수 있도록 함수를 설계합니다. 사용자는 이 함수를 호출할 때, 다양한 머신러닝 알고리즘 객체와 함께 훈련 및 검증 데이터를 전달하기만 하면 됩니다.
+- 다양한 머신러닝 알고리즘을 쉽게 실험하고, 그 성능을 비교할 수 있도록 함수를 설계합니다. 사용자는 이 함수를 호출할 때, 다양한 머신러닝 알고리즘과 함께 훈련 및 검증 할 데이터를 전달하기만 하면 됩니다.
 ```ruby
+# 모델 세트용 템플릿을 구성하고, 자동으로 훈련 세트를 호출하여 들어오는 모델을 훈련하고, 검증 세트를 사용하여 모델을 검증하고, 관련 지표를 출력하도록 설계합니다.
+def fit_ml_algo(algo, X_train, y_train, X_test, cv):  
+    model = algo.fit(X_train, y_train)  
+    test_pred = model.predict(X_test)  
+    try:  
+        probs = model.predict_proba(X_test)[:,1]  
+    except Exception as e:  
+        probs = "Unavailable"  
+        print('Warning: Probs unavaliable.')  
+        print('Reason: ', e)  
+          
+      
+    acc = round(model.score(X_test, y_test) * 100, 2)   
+    
+    # CV -> 모델 여러번 학습 및 검증  
+    train_pred = model_selection.cross_val_predict(algo,   
+                                                  X_train,   
+                                                  y_train,   
+                                                  cv=cv,   
+                                                  n_jobs = -1)  
+    acc_cv = round(metrics.accuracy_score(y_train, train_pred) * 100, 2)  
+    return train_pred, test_pred, acc, acc_cv, probs  
 
+```
+> 훈련 예측값(train_pred), 검증 데이터에 대한 예측값(test_pred), 검증 데이터에 대한 정확도(acc), 교차 검증 정확도(acc_cv), 그리고 예측 확률(probs)을 반환합니다.
+
+
+- 모델 학습 및 평가
+> - 각 코드를 실행하면 AdaBoost 분류기를 사용하여 학습하고, 테스트 세트에 대한 정확도, 10-Fold 교차 검증 정확도, 실행 시간을 출력하게 됩니다.
+
+-  RandomForestClassifier를 사용하여 학습하고, 성능을 평가합니다. 
+  
+```ruby
+# 랜덤 탐색기를 사용하여 계산한 최적의 하이퍼 파라미터 모델을 사용하여 계산하다  
+import datetime
+start_time = time.time()  
+
+now = datetime.datetime.now()
+print(now)
+
+rfc = random_search.best_estimator_  
+train_pred_rf, test_pred_rf, acc_rf, acc_cv_rf, probs_rf = fit_ml_algo(  
+                                                             rfc,   
+                                                             x_train,   
+                                                             y_train,   
+                                                             x_test,   
+                                                             10)  
+rf_time = (time.time() - start_time)  
+print("Accuracy: %s" % acc_rf)  
+print("Accuracy CV 10-Fold: %s" % acc_cv_rf)  
+print("Running Time: %s s" % datetime.timedelta(seconds=rf_time).seconds)  
 
 ```
 
 
-
+- AdaBoostClassifier를 사용하여 학습하고, 성능을 평가합니다.
 
 ```ruby
 # Gradient Boosting Trees 그레이디언트업 의사결정 트리 
@@ -233,28 +261,10 @@ print("Running Time: %s s" % datetime.timedelta(seconds=gbt_time).seconds)
 ```
 
 
+
+- Gradient Boosting Trees(그레이디언트 부스팅 트리) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 ```ruby
-# 로지스틱 회귀
-# 하이퍼파라미터 설정 및 랜덤 서치 생성
-n_iter_search = 10  # 10번 훈련, 값이 클수록 매개변수 정확도가 높아지지만 검색 시간이 더 오래 걸립니다.
-param_dist = {'penalty': ['l2', 'l1'], 
-              'class_weight': [None, 'balanced'],
-              'C': np.logspace(-20, 20, 10000), 
-              'intercept_scaling': np.logspace(-20, 20, 10000)} 
-random_search = RandomizedSearchCV(LogisticRegression(),  # 사용할 분류기
-                                   n_jobs=-1,  # 모든 CPU를 사용하여 훈련합니다. 기본값은 1로 1개의 CPU를 사용합니다.
-                                   param_distributions=param_dist,
-                                   n_iter=n_iter_search)  # 훈련 횟수
-start = time.time()
-random_search.fit(x_train, y_train)
-print("RandomizedSearchCV took %.2f seconds for %d candidates"
-      " parameter settings." % ((time.time() - start), n_iter_search))
-report(random_search.cv_results_)
 
-```
-
-
-```ruby
 
 # AdaBoost Classifier  
 start_time = time.time()  
@@ -273,18 +283,137 @@ print("Running Time: %s s" % datetime.timedelta(seconds=adb_time).seconds)
 
 
 
-
-
 <img width="510" alt="image" src="https://github.com/rud15dns/aix_project/assets/90837976/9d994548-47db-4fd0-aec2-e0be4a4995c4">
 
--  본 훈련에 사용된 10개 모델 중 경사도 상승 결정 트리, 에이다부스트, 랜덤 포레스트의 3개 모델의 정확도가 85% 이상으로 양호함을 알 수 있으며 F1 값도 다른 모델에 비해 우수한 수준이기 때문에 지표의 관점에서 이 세 모델이 본 논문에서 연구한 문제에 더 적합하다고 판단하였다.
+-  본 훈련에 사용된 10개 모델 중 랜덤 포레스트(RandomForest),경사도 상승 결정 트리(Gradient Boosting Trees), 에이다부스트(AdaBoost)의 3개 모델의 정확도가 85% 이상으로 양호함을 알 수 있으며 F1 값도 다른 모델에 비해 우수한 수준이기 때문에 지표의 관점에서 이 세 모델이 본 논문에서 연구한 문제에 더 적합하다고 판단하였습니다.
 
 ## IV. Evaluation & Analysis
 - Graphs, tables, any statistics (if any)
+
+  
+- 주어진 코드는 여러 머신러닝 모델의 성능을 비교하기 위해 정확도, 교차 검증 정확도, 정밀도, 재현율, F1 점수를 포함한 데이터프레임을 생성합니다. 이를 통해 각 모델의 성능을 쉽게 비교할 수 있습니다.
+
+```ruby
+models = pd.DataFrame({  
+    'Model': ['KNN', 'Logistic Regression',   
+              'Random Forest', 'Naive Bayes',   
+              'Stochastic Gradient Decent', 'Linear SVC',   
+              'Decision Tree', 'Gradient Boosting Trees',   
+              'AdaBoost', 'Voting'],  
+    'Acc': [  
+        acc_knn, acc_log, acc_rf,   
+        acc_gaussian, acc_sgd,   
+        acc_linear_svc, acc_dt,  
+        acc_gbt, acc_adb, acc_vot  
+    ],  
+    'Acc_cv': [  
+        acc_cv_knn, acc_cv_log,   
+        acc_cv_rf, acc_cv_gaussian,   
+        acc_cv_sgd, acc_cv_linear_svc,   
+        acc_cv_dt, acc_cv_gbt,  
+        acc_cv_adb, acc_cv_vot  
+    ],  
+    'precision': [  
+        round(precision_score(y_test,test_pred_knn), 3),  
+        round(precision_score(y_test,test_pred_log), 3),  
+        round(precision_score(y_test,test_pred_rf), 3),  
+        round(precision_score(y_test,test_pred_gaussian), 3),  
+        round(precision_score(y_test,test_pred_sgd), 3),  
+        round(precision_score(y_test,test_pred_svc), 3),  
+        round(precision_score(y_test,test_pred_dt), 3),  
+        round(precision_score(y_test,test_pred_gbt), 3),  
+        round(precision_score(y_test,test_pred_adb), 3),  
+        round(precision_score(y_test,test_pred_vot), 3),    
+    ],  
+    'recall': [  
+        round(recall_score(y_test,test_pred_knn), 3),  
+        round(recall_score(y_test,test_pred_log), 3),  
+        round(recall_score(y_test,test_pred_rf), 3),  
+        round(recall_score(y_test,test_pred_gaussian), 3),  
+        round(recall_score(y_test,test_pred_sgd), 3),  
+        round(recall_score(y_test,test_pred_svc), 3),  
+        round(recall_score(y_test,test_pred_dt), 3),  
+        round(recall_score(y_test,test_pred_gbt), 3),  
+        round(recall_score(y_test,test_pred_adb), 3),  
+        round(recall_score(y_test,test_pred_vot), 3),    
+    ],  
+    'F1': [  
+        round(f1_score(y_test,test_pred_knn,average='binary'), 3),  
+        round(f1_score(y_test,test_pred_log,average='binary'), 3),  
+        round(f1_score(y_test,test_pred_rf,average='binary'), 3),  
+        round(f1_score(y_test,test_pred_gaussian,average='binary'), 3),  
+        round(f1_score(y_test,test_pred_sgd,average='binary'), 3),  
+        round(f1_score(y_test,test_pred_svc,average='binary'), 3),  
+        round(f1_score(y_test,test_pred_dt,average='binary'), 3),  
+        round(f1_score(y_test,test_pred_gbt,average='binary'), 3),  
+        round(f1_score(y_test,test_pred_adb,average='binary'), 3),  
+        round(f1_score(y_test,test_pred_vot,average='binary'), 3),      
+    ],  
+})  
+models.sort_values(by='Acc', ascending=False)  
+
+
+```
+
+- 각 모델에 대해 ROC 곡선을 그려 여러 종류의 분류 모델들의 성능을 시각적으로 비교 할 수 있습니다.
+
+```ruby
+plt.style.use('seaborn-whitegrid')  
+fig = plt.figure(figsize=(10,10))   
+models = [  
+    'KNN',   
+    'Logistic Regression',   
+    'Random Forest',   
+    'Naive Bayes',   
+    'Decision Tree',   
+    'Gradient Boosting Trees',  
+    'AdaBoost',  
+    'Linear SVC',  
+    'Voting',  
+    'Stochastic Gradient Decent'  
+]  
+probs = [  
+    probs_knn,  
+    probs_log,  
+    probs_rf,  
+    probs_gau,  
+    probs_dt,  
+    probs_gbt,  
+    probs_adb,  
+    probs_svc,  
+    probs_vot,  
+    probs_sgd  
+]  
+colormap = plt.cm.tab10 #nipy_spectral, Set1, Paired, tab10, gist_ncar  
+colors = [colormap(i) for i in np.linspace(0, 1,len(models))]  
+plt.title('Receiver Operating Characteristic')  
+plt.plot([0, 1], [0, 1],'r--')  
+plt.xlim([-0.01, 1.01])  
+plt.ylim([-0.01, 1.01])  
+plt.ylabel('True Positive Rate')  
+plt.xlabel('False Positive Rate')  
+def plot_roc_curves(y_test, prob, model):  
+    fpr, tpr, threshold = metrics.roc_curve(y_test, prob)  
+    roc_auc = metrics.auc(fpr, tpr)  
+    label = model + ' AUC = %0.2f' % roc_auc  
+    plt.plot(fpr, tpr, 'b', label=label, color=colors[i])  
+    plt.legend(loc = 'lower right')    
+for i, model in list(enumerate(models)):  
+    plot_roc_curves(y_test, probs[i], models[i])
+
+
+```
 - ![image](https://github.com/rud15dns/aix_project/assets/90837976/411f5d56-b5eb-4400-a904-c168e9d5cb9c)
+> 
+
+
+
+- Precision-Recall 곡선을 통해서도 다양한 분류 모델의 성능을 시각적으로 비교 할 수 있습니다.
+
 - ![image](https://github.com/rud15dns/aix_project/assets/90837976/82da2d30-1275-48e7-b231-fc1f1d267e32)
 
 
 ## V. Related Work (e.g., existing studies)
 - Tools, libraries, blogs, or any documentation that you have used to do this project.
 ## VI. Conclusion: Discussion
+## VII. role in team ( 팀 내 역할) 
