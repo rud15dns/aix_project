@@ -791,6 +791,8 @@ print("Accuracy CV 10-Fold: %s" % acc_cv_sgd)
 print("Running Time: %s s" % datetime.timedelta(seconds=sgd_time).seconds)  
 ```
 -  Voting Classifier 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+> - 여러 개의 다른 머신러닝 모델(예 : 로지스틱 회귀, 결정 트리 등)을 결합하여 최종 예측을 만드는 학습 기법입니다.
+> - voting = 'soft'를 하여, 소프트 보팅을 사용합니다. 각 모델의 예측 확률을 평균내어 최종 예측을 결정합니다. 
 ```ruby
 # Voting Classifier  
 start_time = time.time()  
