@@ -768,6 +768,46 @@ print("Accuracy: %s" % acc_sgd)
 print("Accuracy CV 10-Fold: %s" % acc_cv_sgd)  
 print("Running Time: %s s" % datetime.timedelta(seconds=sgd_time).seconds)  
 ```
+-  Voting Classifier 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+```ruby
+# Voting Classifier  
+start_time = time.time()  
+voting_clf = VotingClassifier(estimators=[  
+    ('log_clf', LogisticRegression()),   
+    ('gnb_clf', GaussianNB()),  
+    ('rf_clf', RandomForestClassifier(n_estimators=10)),  
+    ('gb_clf', GradientBoostingClassifier()),  
+    ('dt_clf', DecisionTreeClassifier(random_state=666))],  
+                             voting='soft', n_jobs = -1)  
+train_pred_vot, test_pred_vot, acc_vot, acc_cv_vot, probs_vot= fit_ml_algo(voting_clf,   
+              x_train,   
+              y_train,   
+              x_test,   
+              10)  
+vot_time = (time.time() - start_time)  
+print("Accuracy: %s" % acc_vot)  
+print("Accuracy CV 10-Fold: %s" % acc_cv_vot)  
+print("Running Time: %s s" % datetime.timedelta(seconds=vot_time).seconds)  
+```
+-  K-NN 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+```ruby
+# k-Nearest Neighbors  
+start_time = time.time()  
+train_pred_knn, test_pred_knn, acc_knn, acc_cv_knn, probs_knn  = fit_ml_algo(KNeighborsClassifier(n_neighbors = 3,  
+                                   n_jobs = -1),   
+                                   x_train,   
+                                   y_train,   
+                                   x_test,   
+                                   10)  
+knn_time = (time.time() - start_time)  
+print("Accuracy: %s" % acc_knn)  
+print("Accuracy CV 10-Fold: %s" % acc_cv_knn)  
+print("Running Time: %s s" % datetime.timedelta(seconds=knn_time))  
+```
+
+-  Stochastic Gradient Descent 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+-  Stochastic Gradient Descent 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+
 <br/><br/>
 
 
