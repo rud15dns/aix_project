@@ -1018,7 +1018,7 @@ for i, model in list(enumerate(models)):
 <br/><br/>
 
 ## V. Related Work (e.g., existing studies)
-- Tools, libraries, blogs, or any documentation that you have used to do this project.
+
 - https://www.kaggle.com/datasets/uciml/adult-census-income
 - https://dacon.io/competitions/official/235892/talkboard
 - https://scikit-learn.org/stable/supervised_learning.html
