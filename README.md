@@ -396,6 +396,47 @@ sns.countplot(y="workclass", data=dataset);
 > - 위의 막대 그래프에서 민간 작업이 표본에서 차지하는 비중이 상대적으로 크고 비작업 및 비수입 작업 표본의 수는 매우 적음을 확인하였습니다.
 > - 해당 동향을 파악하여 비슷한 범주를 통합함으로써 5가지 범주로 요약하였습니다.
 
+
+-  데이터 셋 'Occupation' 의 범주 단순화
+  
+```ruby
+#직업은 Tech-support(기술 지원), Craft-repair(수공예 정비), Other-service(기타 서비스),
+#Sales(판매), Exec-managerial(경영 및 관리), Prof-specialty(전문기술직),
+#Handlers-cleaners(노동 및 청소), Machine-op-inspct(기계 조작 및 검사),
+# Adm-clerical(행정 및 사무), Farming-fishing-fishing(농업 및 어업) 등 총 14가지 유형이 있습니다.
+plt.style.use('seaborn-whitegrid')  
+plt.figure(figsize=(15,5))   
+sns.countplot(y="occupation", data=dataset);  
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/b56c94f4-9e3a-4400-8ff5-e00fb286a9d8)
+
+``` ruby
+dataset.loc[dataset['occupation'] == 'Adm-clerical', 'occupation'] = 'Admin'  # 행정 사무
+# 군대 관련 직업과 보호 서비스 직업을 하나의 군사 관련으로 묶었습니다.
+dataset.loc[dataset['occupation'] == 'Armed-Forces', 'occupation'] = 'Military'  #군대
+dataset.loc[dataset['occupation'] == 'Protective-serv', 'occupation'] = 'Military'
+#육체 노동을 필요로 하는 직업들을 하나의 그룹으로 묶었습니다.
+dataset.loc[dataset['occupation'] == 'Craft-repair', 'occupation'] = 'Manual Labour'# 육체노동자  
+dataset.loc[dataset['occupation'] == 'Transport-moving', 'occupation'] = 'Manual Labour'   
+dataset.loc[dataset['occupation'] == 'Farming-fishing', 'occupation'] = 'Manual Labour'   
+dataset.loc[dataset['occupation'] == 'Handlers-cleaners', 'occupation'] = 'Manual Labour'    
+dataset.loc[dataset['occupation'] == 'Machine-op-inspct', 'occupation'] = 'Manual Labour'
+#주로 사무실에서 이루어지는 일을 하는 직업들을 하나의 그룹으로 묶었습니다   
+dataset.loc[dataset['occupation'] == 'Exec-managerial', 'occupation'] = 'Office Labour'  # 문서 작업
+dataset.loc[dataset['occupation'] == 'Sales', 'occupation'] = 'Office Labour' 
+dataset.loc[dataset['occupation'] == 'Tech-support', 'occupation'] = 'Office Labour'
+#서비스 직업들을 하나의 그룹으로 묵었습니다.
+dataset.loc[dataset['occupation'] == 'Other-service', 'occupation'] = 'Service'#  서비스 직종
+dataset.loc[dataset['occupation'] == 'Priv-house-serv', 'occupation'] = 'Service'  
+dataset.loc[dataset['occupation'] == 'Prof-specialty', 'occupation'] = 'Professional'# 기술자
+  
+plt.style.use('seaborn-whitegrid')  
+fig = plt.figure(figsize=(20,3))  
+sns.countplot(y="occupation", data=dataset);
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/7633dc7f-064d-4edd-916e-1d7238be6b1b)
+> - 위의 막대 그래프에서 비슷한 범주를 통합함으로써 6가지 범주로 요약하였습니다.
+> - 
 <br/><br/>
 
 
