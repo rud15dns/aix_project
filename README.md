@@ -11,11 +11,17 @@
 
 
 ## Index:
-I. Proposal<br/>
-II. Datasets<br/>
-III. Methodology<br/>
-IV. Evaluation & Analysis<br/>
-V. Related Work
+#### I. Proposal<br/>
+#### II. Datasets<br/>
+[1] 데이터 가져오기    [2] 결측 값 처리   [3] 각 변수의 분포 시각화   [4] 변수의 범주 단순화 <br/>[5] 범주형 변수 인코딩   [6] 히트맵을 통한 시각화  [7] 모델 훈련 준비 <br/>
+#### III. Methodology<br/>
+[1] 알고리즘 성능 비교를 위한 함수 설계  
+ [2] 모델 학습 및 평가 <br/>
+#### IV. Evaluation & Analysis<br/>
+[1] 모델 성능 비교를 위한 데이터프레임 생성 
+ [2] ROC 곡선 시각화 
+ [3] Precision-Recall 곡선 시각화 <br/>
+#### V. Related Work
 
 
 ## I. Proposal (Option A )<br/>
