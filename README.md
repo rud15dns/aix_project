@@ -11,7 +11,7 @@
 <br/>
 
 
-## I. Proposal (Option 1 )<br/>
+## I. Proposal (Option A )<br/>
 
 
 ### Motivation (동기) :
@@ -29,6 +29,7 @@
 
 ### project goal (프로젝트 목표) : 
 #### 소득 예측 모델을 구축하고 실제 데이터와 목표 변수 사이의 관계를 분석하여 최적의 모델을 찾고자 합니다.
+<br/>
 
 
 ## II. Datasets
@@ -360,7 +361,9 @@ plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 <br/><br/>  
 
 ### [4] 변수의 범주 단순화
->데이터셋 내의 범주형 변수를 더 일반적이고 일관성 있는 범주로 변환합니다.<br/><br/>
+>데이터셋 내의 범주형 변수를 더 일반적이고 일관성 있는 범주로 변환합니다.
+
+<br/>
 
 -  데이터 셋 'workclass' 의 범주 단순화
 
@@ -561,7 +564,9 @@ dataset_num['income-level'] = dataset_num['income-level'].factorize()[0]
 > - 각 범주형 변수에 대해 'factorize()' 함수를 사용하여 숫자형으로 변환합니다.
 > - factorize() 함수는 각 고유한 범주의 값을 정수로 맵핑합니다.
 > - 예를 들어서, workclass 열의 고유 값들이 ['Private', 'Self-emp-not-inc', 'Logical-gov', 'Private', 'Private...]이라면,
-> - 이들을 각각 [0, 1, 2, 0, 0, ...]와 같이 정수로 변환합니다. <br/>
+> - 이들을 각각 [0, 1, 2, 0, 0, ...]와 같이 정수로 변환합니다.
+
+<br/><br/>
 
 ### [6] 히트맵을 통한 시각화 <br/>
 - 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인합니다.
@@ -613,7 +618,7 @@ x_train,x_test,y_train,y_test = train_test_split(
 
 - 이전 과정에서 데이터를 시각화하여 다양한 유형을 파악했지만, 어떤 기계 학습 알고리즘이 가장 적합할지 결정할 수 없었습니다. 따라서 약 10개의 다양한 알고리즘을 적용해보기로 했습니다.
 - 여러 가지 알고리즘으로 모델을 훈련한 후, 그 성능을 비교하여 가장 효과적인 상위 3개의 알고리즘을 선정하고자 합니다.
-  <br/>
+  <br/><br/>
 
 ### [1] 알고리즘 성능 비교를 위한 함수 설계 <br/>
 - 다양한 머신러닝 알고리즘을 쉽게 실험하고, 그 성능을 비교할 수 있도록 함수를 설계합니다. 사용자는 이 함수를 호출할 때, 다양한 머신러닝 알고리즘과 함께 훈련 및 검증 할 데이터를 전달하기만 하면 됩니다.
@@ -644,13 +649,15 @@ def fit_ml_algo(algo, X_train, y_train, X_test, cv):
 ```
 > 훈련 예측값(train_pred), 검증 데이터에 대한 예측값(test_pred), 검증 데이터에 대한 정확도(acc), 교차 검증 정확도(acc_cv), 그리고 예측 확률(probs)을 반환합니다.
 
+<br/>
 
 ### [2] 모델 학습 및 평가 <br/>
 > 각 코드를 실행하면 AdaBoost 분류기를 사용하여 학습하고, 테스트 세트에 대한 정확도, 10-Fold 교차 검증 정확도, 실행 시간을 출력하게 됩니다.
 
 
 <br/>
--  Random Forest Classifier(랜던 포레스트)모델를 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다. 
+
+- Random Forest Classifier(랜덤 포레스트) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다. 
   
 ```ruby
 # 랜덤 탐색기를 사용하여 계산한 최적의 하이퍼 파라미터 모델을 사용하여 계산하다  
@@ -693,7 +700,7 @@ print("Running Time: %s s" % datetime.timedelta(seconds=gbt_time).seconds)
 
 <br/>
 
-- Gradient Boosting Trees(그레이디언트 부스팅 트리) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+-  AdaBoost Classifier(에이다부스트) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 ```ruby
 
 
@@ -717,10 +724,9 @@ print("Running Time: %s s" % datetime.timedelta(seconds=adb_time).seconds)
 
 
 ## IV. Evaluation & Analysis
-<br/><br/>
 
 ### [1] 모델 성능 비교를 위한 데이터프레임 생성
-<br/>
+
 - 주어진 코드는 여러 머신러닝 모델의 성능을 비교하기 위해 정확도, 교차 검증 정확도, 정밀도, 재현율, F1 점수를 포함한 데이터프레임을 생성합니다. 이를 통해 각 모델의 성능을 쉽게 비교할 수 있습니다.
 
 ```ruby
@@ -842,7 +848,7 @@ for i, model in list(enumerate(models)):
 
 
 ```
-- ![image](https://github.com/rud15dns/aix_project/assets/90837976/411f5d56-b5eb-4400-a904-c168e9d5cb9c)
+![image](https://github.com/rud15dns/aix_project/assets/90837976/411f5d56-b5eb-4400-a904-c168e9d5cb9c)
 
 <br/>
 
@@ -854,9 +860,12 @@ for i, model in list(enumerate(models)):
 
 
 > 세 가지 성능 평가 방법 모두에서 10개의 모델 중 랜덤 포레스트(RandomForest), 경사하강 결정 트리(Gradient Boosting Trees), 에이다부스트(AdaBoost) 모델이 가장 우수한 것으로 평가되었습니다.
-<br/>
+<br/><br/>
 
 ## V. Related Work (e.g., existing studies)
-- Tools, libraries, blogs, or any documentation that you have used to do this project.
+- Tools, libraries, blogs, or any documentation that you have used to do this project. 
 ## VI. Conclusion: Discussion
+- 이번 프로젝트를 진행하면서 다양한 머신러닝 알고리즘에 대해 탐구하고 활용해 볼 수 있었고, 모델을 학습시키는 과정에 대해 다시 한번 정확하게 익히는 계기가 되었습니다.
+- 
+-  인구센서스 데이터를 활용하여 소득 예측 모델을 구축과정에서  다양한 머신러닝 알고리즘을 적용한 결과, 랜덤 포레스트(RandomForest), 경사하강 결정 트리(Gradient Boosting Trees), 에이다부스트(AdaBoost) 모델이 가장 우수한 성능을 보였습니다. 이 모델들은 높은 정확도와 균형 잡힌 정밀도, 재현율, F1 점수를 기록하여 데이터의 복잡한 패턴을 효과적으로 학습할 수 있음을 입증했습니다. 또한, ROC 곡선을 통해 시각적으로 모델 성능을 비교함으로써 각 모델의 강점을 명확하게 파악할 수 있었습니다. 이러한 결과는 인구센서스 데이터를 기반으로 한 소득 예측이 다양한 실생활 응용 분야에서 유용하게 활용될 수 있음을 시사합니다. 향후 연구에서는 모델의 해석 가능성을 높이고, 추가적인 특징 공학(feature engineering)과 하이퍼파라미터 튜닝을 통해 성능을 더욱 향상시킬 수 있을 것입니다
 ## VII. role in team ( 팀 내 역할) 
