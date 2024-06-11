@@ -11,10 +11,10 @@
 
 
 ## Index:
-I. Proposal)<br/>
-II. Datasets)<br/>
-III. Methodology)<br/>
-IV. Evaluation & Analysis)<br/>
+I. Proposal<br/>
+II. Datasets<br/>
+III. Methodology<br/>
+IV. Evaluation & Analysis<br/>
 V. Related Work
 
 
