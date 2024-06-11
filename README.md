@@ -691,6 +691,8 @@ print("Running Time: %s s" % datetime.timedelta(seconds=rf_time).seconds)
 <br/>
 
 - Gradient Boosting Trees (그레이디언트업 의사결정 트리) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+> - 새로운 트리는 이전 트리들의 오차를 줄이는 방향으로 학습되는데, 이 때 오차를 줄이기 위해 경사하강법을 이용하여 모델을 최적화합니다.
+> - 최종 트리는 각 트리의 예측값을 모두 합산하여 만듭니다. 
 
 ```ruby
 # Gradient Boosting Trees 그레이디언트업 의사결정 트리 
