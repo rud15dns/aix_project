@@ -360,7 +360,7 @@ plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 <br/><br/>  
 
 ### [4] 변수의 범주 단순화
-- 데이터셋 내의 범주형 변수를 더 일반적이고 일관성 있는 범주로 변환합니다.<br/><br/>
+>데이터셋 내의 범주형 변수를 더 일반적이고 일관성 있는 범주로 변환합니다.<br/><br/>
 
 -  데이터 셋 'workclass' 의 범주 단순화
   
@@ -590,8 +590,9 @@ dataset_num['income-level'] = dataset_num['income-level'].factorize()[0]
 > - 각 범주형 변수에 대해 'factorize()' 함수를 사용하여 숫자형으로 변환합니다.
 > - factorize() 함수는 각 고유한 범주의 값을 정수로 맵핑합니다.
 > - 예를 들어서, workclass 열의 고유 값들이 ['Private', 'Self-emp-not-inc', 'Logical-gov', 'Private', 'Private...]이라면,
-> - 이들을 각각 [0, 1, 2, 0, 0, ...]와 같이 정수로 변환합니다.
+> - 이들을 각각 [0, 1, 2, 0, 0, ...]와 같이 정수로 변환합니다. <br/>
 
+### [5] 히트맵을 통한 시각화 <br/>
 - 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인합니다.
 
 ```ruby
@@ -607,8 +608,9 @@ sns.heatmap(dataset_num.corr(), vmin=-1, vmax=1, square=True,
 ```  
   ![image](https://github.com/rud15dns/aix_project/assets/90837976/c10b4a5c-662d-42e6-b457-0890b6d3035d)
   >데이터에 따른 income-level(소득수준)의 변화를 확인 할 수 있습니다.
+<br/>
 
-- 모델 훈련 준비
+### [6] 모델 훈련 준비 <br/>
  
 
 -  데이터셋에 x_data에는   'income-level' 열을 제외한 나머지 열들을 독립 변수 즉 입력 값들로 설정하고 y_data에는 종속 변수인 'income-level' 열을 저장합니다.
@@ -619,7 +621,7 @@ x_data=dataset_num.drop(['income-level'],axis=1)  # 소득수준 income-level �
 y_data=dataset_num['income-level']  # 소득수준income-level열   종속변수
 
 ```
-
+<br/>
 
 - 모델을 훈련시키기 위해 필요한 입력 데이터(x_data)와 예측해야 하는 목표 값(y_data)을 분리해 줍니다.
 
@@ -634,7 +636,7 @@ x_train,x_test,y_train,y_test = train_test_split(
 
 ```
 
-
+<br/><br/>
 
 ## III. Methodology
 - Explaining your choice of algorithms (methods) - Explaining features (if any)
