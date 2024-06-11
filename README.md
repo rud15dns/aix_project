@@ -717,7 +717,18 @@ print("Accuracy CV 10-Fold: %s" % acc_cv_adb)
 print("Running Time: %s s" % datetime.timedelta(seconds=adb_time).seconds)  
 
 ```
-
+-  Naive Bayes(GaussianNB) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+> - 머신러닝의 Naive Bayes 알고리즘 중 하나입니다.
+> - 모든 특징이 서로 독립적이라고 가정합니다. 
+> - 연속형 데이터를 처리하기 위해 각 특징이 정규분포를 따른다고 가정합니다.
+> - 주어진 트레이닝 데이터를 이용해서 각 클래스에 대한 각 특징의 평균과 분산을 계산합니다. 새로운 데이터가 주어졌을 때, 각 클래스에 대한 조건부 확률을 계산하여 가장 높은 확률을 가진 클래스로 예측합니다.
+```ruby
+train_pred_gaussian, test_pred_gaussian, acc_gaussian, acc_cv_gaussian, probs_gau= fit_ml_algo(GaussianNB(),   
+              x_train,   
+              y_train,   
+              x_test,   
+              10)  
+```
 
 <br/><br/>
 
