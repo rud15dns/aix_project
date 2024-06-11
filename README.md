@@ -365,6 +365,16 @@ plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 -  데이터 셋 'workclass' 의 범주 단순화
   
 ```ruby
+# 이 데이터 세트에서 작업 유형(workclass) 지표에는 Private, Self-emp-not-inc, Self-emp-inc,
+# Federal-gov, Local-gov, State-gov, Without-pay, Never-worked의 8가지 유형이 있습니다.
+#막대 차트를 그려 workclass에 따른 샘플 수를 확인하였습니다.
+plt.style.use('seaborn-whitegrid')  
+plt.figure(figsize=(15, 4))   
+sns.countplot(y="workclass", data=dataset);
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/642d7fda-bdb1-4d9c-9960-f12e180f1eb3)
+
+``` ruby
 #위의 막대 그래프에서 민간 작업이 표본에서 차지하는 비중이 상대적으로 크고 비작업 및 비수입 작업 표본의 수는 매우 적음을 알 수 있으며 실제 상황에 따라 5가지 범주로 요약됩니다.
 dataset.loc[dataset['workclass'] == 'Without-pay', 'workclass'] = 'Not Working'  
 dataset.loc[dataset['workclass'] == 'Never-worked', 'workclass'] = 'Not Working'  
