@@ -833,6 +833,8 @@ print("Running Time: %s s" % datetime.timedelta(seconds=knn_time))
 ```
 
 -  Logistic Regression 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+> - 주어진 입력(독립 변수)에 대해 특정 클래스에 속할 확률을 예측합니다.
+> - 예측된 확률은 로지스틱 함수를 통해서 결정되며, 이 모델은 결과가 0과 1 사이의 값으로 제한됩니다.
 ```ruby
 # 로지스틱 회귀
 # 하이퍼파라미터 설정 및 랜덤 서치 생성
@@ -840,7 +842,8 @@ n_iter_search = 10  # 10번 훈련, 값이 클수록 매개변수 정확도가 �
 param_dist = {'penalty': ['l2', 'l1'], 
               'class_weight': [None, 'balanced'],
               'C': np.logspace(-20, 20, 10000), 
-              'intercept_scaling': np.logspace(-20, 20, 10000)} 
+              'intercept_scaling': np.logspace(-20, 20, 10000)}
+# RandomizedSearchCV를 사용하여 로지스틱 회귀 모델의 최적 하이퍼파라미터를 탐색합니다.
 random_search = RandomizedSearchCV(LogisticRegression(),  # 사용할 분류기
                                    n_jobs=-1,  # 모든 CPU를 사용하여 훈련합니다. 기본값은 1로 1개의 CPU를 사용합니다.
                                    param_distributions=param_dist,
@@ -867,6 +870,8 @@ print("Running Time: %s s" % datetime.timedelta(seconds=log_time).seconds)
 
 ```
 - Decision Tree Classifier 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+> - 이 모델은 데이터의 특성을 기반으로 Decision nodes와 lead nodes를 포함한 트리 구조를 생성합니다. 각 내부 노드는 데이터의 속성에 대한 결정 규칙을 나타내며, 각 leaf node는 결과의 클래스 레이블(최종적인 예측)을 나타냅니다.
+> - 데이터를 가장 잘 나눌 수 있는 특성과 그 임계값을 찾기 위하여 엔트로피(데이터의 불확실성)와 같은 기준을 사용합니다. 
 ```ruby
 # Decision Tree Classifier  
 start_time = time.time()  
