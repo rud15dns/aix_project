@@ -542,6 +542,8 @@ plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/a199b23b-d6f1-4f26-8563-542221c6f453)
 
 <br/><br/>
+
+### [5] 범주형 변수 인코딩<br/>
 - 데이터 세트를 머신 러닝 모델에 적합한 형식으로 바꾸기 위해 범주형 변수를 숫자형 변수로 변환합니다.
 ```ruby
 dataset_num = dataset.copy() # 데이터 세트 복사  
@@ -561,7 +563,7 @@ dataset_num['income-level'] = dataset_num['income-level'].factorize()[0]
 > - 예를 들어서, workclass 열의 고유 값들이 ['Private', 'Self-emp-not-inc', 'Logical-gov', 'Private', 'Private...]이라면,
 > - 이들을 각각 [0, 1, 2, 0, 0, ...]와 같이 정수로 변환합니다. <br/>
 
-### [5] 히트맵을 통한 시각화 <br/>
+### [6] 히트맵을 통한 시각화 <br/>
 - 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인합니다.
 
 ```ruby
@@ -579,7 +581,7 @@ sns.heatmap(dataset_num.corr(), vmin=-1, vmax=1, square=True,
   >데이터에 따른 income-level(소득수준)의 변화를 확인 할 수 있습니다.
 <br/>
 
-### [6] 모델 훈련 준비 <br/>
+### [7] 모델 훈련 준비 <br/>
  
 
 -  데이터셋에 x_data에는   'income-level' 열을 제외한 나머지 열들을 독립 변수 즉 입력 값들로 설정하고 y_data에는 종속 변수인 'income-level' 열을 저장합니다.
@@ -607,11 +609,13 @@ x_train,x_test,y_train,y_test = train_test_split(
 
 <br/><br/>
 
-## III. Methodology
-- Explaining your choice of algorithms (methods) - Explaining features (if any)
-- 우리는 데이터의 다양한 유형을 알고 있지만 어떤 기계 학습 알고리즘을 적용하기에 가장 좋은지 결정할 수 없기 때문에 다양한 알고리즘(약 10개)을 적용해보기로 하였습니다.
-- 여러 가지 다른 알고리즘을 통해 훈련하고 어떤 효과가 가장 좋은지 비교하고 상위 3개로 추려보고자 합니다.
+## III. Methodology <br/> 
 
+- 이전 과정에서 데이터를 시각화하여 다양한 유형을 파악했지만, 어떤 기계 학습 알고리즘이 가장 적합할지 결정할 수 없었습니다. 따라서 약 10개의 다양한 알고리즘을 적용해보기로 했습니다.
+- 여러 가지 알고리즘으로 모델을 훈련한 후, 그 성능을 비교하여 가장 효과적인 상위 3개의 알고리즘을 선정하고자 합니다.
+  <br/>
+
+### [1] 알고리즘 성능 비교를 위한 함수 설계 <br/>
 - 다양한 머신러닝 알고리즘을 쉽게 실험하고, 그 성능을 비교할 수 있도록 함수를 설계합니다. 사용자는 이 함수를 호출할 때, 다양한 머신러닝 알고리즘과 함께 훈련 및 검증 할 데이터를 전달하기만 하면 됩니다.
 ```ruby
 # 모델 세트용 템플릿을 구성하고, 자동으로 훈련 세트를 호출하여 들어오는 모델을 훈련하고, 검증 세트를 사용하여 모델을 검증하고, 관련 지표를 출력하도록 설계합니다.
@@ -641,10 +645,12 @@ def fit_ml_algo(algo, X_train, y_train, X_test, cv):
 > 훈련 예측값(train_pred), 검증 데이터에 대한 예측값(test_pred), 검증 데이터에 대한 정확도(acc), 교차 검증 정확도(acc_cv), 그리고 예측 확률(probs)을 반환합니다.
 
 
-- 모델 학습 및 평가
-> - 각 코드를 실행하면 AdaBoost 분류기를 사용하여 학습하고, 테스트 세트에 대한 정확도, 10-Fold 교차 검증 정확도, 실행 시간을 출력하게 됩니다.
+### [2] 모델 학습 및 평가 <br/>
+> 각 코드를 실행하면 AdaBoost 분류기를 사용하여 학습하고, 테스트 세트에 대한 정확도, 10-Fold 교차 검증 정확도, 실행 시간을 출력하게 됩니다.
 
--  RandomForestClassifier를 사용하여 학습하고, 성능을 평가합니다. 
+
+<br/>
+-  Random Forest Classifier(랜던 포레스트)모델를 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다. 
   
 ```ruby
 # 랜덤 탐색기를 사용하여 계산한 최적의 하이퍼 파라미터 모델을 사용하여 계산하다  
@@ -667,9 +673,9 @@ print("Accuracy CV 10-Fold: %s" % acc_cv_rf)
 print("Running Time: %s s" % datetime.timedelta(seconds=rf_time).seconds)  
 
 ```
+<br/>
 
-
-- AdaBoostClassifier를 사용하여 학습하고, 성능을 평가합니다.
+- Gradient Boosting Trees (그레이디언트업 의사결정 트리) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 
 ```ruby
 # Gradient Boosting Trees 그레이디언트업 의사결정 트리 
@@ -685,7 +691,7 @@ print("Accuracy CV 10-Fold: %s" % acc_cv_gbt)
 print("Running Time: %s s" % datetime.timedelta(seconds=gbt_time).seconds)  
 ```
 
-
+<br/>
 
 - Gradient Boosting Trees(그레이디언트 부스팅 트리) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 ```ruby
@@ -706,16 +712,15 @@ print("Running Time: %s s" % datetime.timedelta(seconds=adb_time).seconds)
 ```
 
 
+<br/><br/>
 
 
-<img width="510" alt="image" src="https://github.com/rud15dns/aix_project/assets/90837976/9d994548-47db-4fd0-aec2-e0be4a4995c4">
-
--  본 훈련에 사용된 10개 모델 중 랜덤 포레스트(RandomForest),경사도 상승 결정 트리(Gradient Boosting Trees), 에이다부스트(AdaBoost)의 3개 모델의 정확도가 85% 이상으로 양호함을 알 수 있으며 F1 값도 다른 모델에 비해 우수한 수준이기 때문에 지표의 관점에서 이 세 모델이 본 논문에서 연구한 문제에 더 적합하다고 판단하였습니다.
 
 ## IV. Evaluation & Analysis
-- Graphs, tables, any statistics (if any)
+<br/><br/>
 
-  
+### [1] 모델 성능 비교를 위한 데이터프레임 생성
+<br/>
 - 주어진 코드는 여러 머신러닝 모델의 성능을 비교하기 위해 정확도, 교차 검증 정확도, 정밀도, 재현율, F1 점수를 포함한 데이터프레임을 생성합니다. 이를 통해 각 모델의 성능을 쉽게 비교할 수 있습니다.
 
 ```ruby
@@ -780,6 +785,15 @@ models.sort_values(by='Acc', ascending=False)
 
 ```
 
+<img width="510" alt="image" src="https://github.com/rud15dns/aix_project/assets/90837976/9d994548-47db-4fd0-aec2-e0be4a4995c4">
+
+-  본 훈련에 사용된 10개 모델 중 랜덤 포레스트(RandomForest),경사도 상승 결정 트리(Gradient Boosting Trees), 에이다부스트(AdaBoost)의 3개 모델의 정확도가 85% 이상으로 양호함을 알 수 있으며 F1 값도 다른 모델에 비해 우수한 수준이기 때문에 지표의 관점에서 이 세 모델이 본 논문에서 연구한 문제에 더 적합하다고 판단하였습니다.
+
+<br/>
+
+### [2] ROC 곡선 시각화 
+<br/>
+
 - 각 모델에 대해 ROC 곡선을 그려 여러 종류의 분류 모델들의 성능을 시각적으로 비교 할 수 있습니다.
 
 ```ruby
@@ -829,14 +843,18 @@ for i, model in list(enumerate(models)):
 
 ```
 - ![image](https://github.com/rud15dns/aix_project/assets/90837976/411f5d56-b5eb-4400-a904-c168e9d5cb9c)
-> 
+
+<br/>
 
 
-
+### [3] Precision-Recall 곡선 시각화
 - Precision-Recall 곡선을 통해서도 다양한 분류 모델의 성능을 시각적으로 비교 할 수 있습니다.
 
 - ![image](https://github.com/rud15dns/aix_project/assets/90837976/82da2d30-1275-48e7-b231-fc1f1d267e32)
 
+
+> 세 가지 성능 평가 방법 모두에서 10개의 모델 중 랜덤 포레스트(RandomForest), 경사하강 결정 트리(Gradient Boosting Trees), 에이다부스트(AdaBoost) 모델이 가장 우수한 것으로 평가되었습니다.
+<br/>
 
 ## V. Related Work (e.g., existing studies)
 - Tools, libraries, blogs, or any documentation that you have used to do this project.
