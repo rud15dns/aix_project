@@ -436,9 +436,161 @@ sns.countplot(y="occupation", data=dataset);
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/7633dc7f-064d-4edd-916e-1d7238be6b1b)
 > - 위의 막대 그래프에서 비슷한 범주를 통합함으로써 6가지 범주로 요약하였습니다.
-> - 
-<br/><br/>
 
+-  데이터 셋 'Country' 의 범주 단순화
+``` ruby
+#총 41개 국가와 지역이 데이터 셋에 있고, 미국을 제외한 대부분의 국가 및 지역의 샘플이 거의 없으므로 나머지 국가는 대륙별로 범주를 단순화시켰습니다.
+dataset.loc[dataset['country'] == 'China', 'country'] = 'East-Asia'  
+dataset.loc[dataset['country'] == 'Hong', 'country'] = 'East-Asia'  
+dataset.loc[dataset['country'] == 'Taiwan', 'country'] = 'East-Asia'  
+dataset.loc[dataset['country'] == 'Japan', 'country'] = 'East-Asia'  
+  
+dataset.loc[dataset['country'] == 'Thailand', 'country'] = 'Southeast-Asia'  
+dataset.loc[dataset['country'] == 'Vietnam', 'country'] = 'Southeast-Asia'  
+dataset.loc[dataset['country'] == 'Laos', 'country'] = 'Southeast-Asia'  
+dataset.loc[dataset['country'] == 'Philippines', 'country'] = 'Southeast-Asia'  
+dataset.loc[dataset['country'] == 'Cambodia', 'country'] = 'Southeast-Asia'  
+  
+dataset.loc[dataset['country'] == 'Columbia', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Cuba', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Dominican-Republic', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Ecuador', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Guatemala', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'El-Salvador', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Haiti', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Honduras', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Mexico', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Nicaragua', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Outlying-US(Guam-USVI-etc)'  , 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Peru', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Jamaica', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Puerto-Rico', 'country'] = 'South-America'  
+dataset.loc[dataset['country'] == 'Trinadad&Tobago', 'country'] = 'South-America'  
+  
+dataset.loc[dataset['country'] == 'Canada', 'country'] = 'British-Commonwealth'  
+dataset.loc[dataset['country'] == 'England', 'country'] = 'British-Commonwealth'  
+dataset.loc[dataset['country'] == 'India', 'country'] = 'British-Commonwealth'  
+dataset.loc[dataset['country'] == 'Ireland', 'country'] = 'British-Commonwealth'  
+dataset.loc[dataset['country'] == 'Scotland', 'country'] = 'British-Commonwealth'  
+  
+dataset.loc[dataset['country'] == 'France', 'country'] = 'Europe'  
+dataset.loc[dataset['country'] == 'Germany', 'country'] = 'Europe'  
+dataset.loc[dataset['country'] == 'Italy', 'country'] = 'Europe'  
+dataset.loc[dataset['country'] == 'Holand-Netherlands', 'country'] = 'Europe'  
+dataset.loc[dataset['country'] == 'Greece', 'country'] = 'Europe'  
+dataset.loc[dataset['country'] == 'Hungary', 'country'] = 'Europe'  
+dataset.loc[dataset['country'] == 'Iran', 'country'] = 'Europe'  
+dataset.loc[dataset['country'] == 'Yugoslavia', 'country'] = 'Europe'  
+dataset.loc[dataset['country'] == 'Poland', 'country'] = 'Europe'  
+dataset.loc[dataset['country'] == 'Portugal', 'country'] = 'Europe'  
+dataset.loc[dataset['country'] == 'South', 'country'] = 'Europe'  
+  
+dataset.loc[dataset['country'] == 'United-States', 'country'] = 'United-States'  
+#국가를 지역으로 통합한 후에도 미국과 비교하면 여전히 큰 차이가 있지만 각 범주의 표본 수가 초기 데이터 세트보다 균일해졌습니다.
+
+plt.style.use('seaborn-whitegrid')  
+fig = plt.figure(figsize=(15,4))   
+sns.countplot(y="country", data=dataset);  
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/aa5351d8-4295-4e14-8365-01c39d9262a7)
+
+- 데이터 셋 'Education'의 범주 단순화
+``` ruby
+# 교육 수준을 나타내는 'Education' 데이터세트에 대해서 막대그래프를 그려 분포 상황을 확인하였습니다.
+plt.style.use('seaborn-whitegrid')  
+plt.figure(figsize=(15,5))   
+sns.countplot(y="education", data=dataset);
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/39ef77a0-9255-43e1-982a-c9cfc18c5190)
+
+``` ruby
+#위의 막대 그래프에서 확인해 본 결과, 교육 수준은 총 16가지로 나뉘며,
+# 교육수준이 낮은 각 카테고리의 수가 적음을 알 수 있었습니다.
+# 고등학교를 기준으로 하여 그 아래의 교육수준은 dropout으로 통합하고,
+# Assoc-acdm과 Assoc-voc는 Associate로 통합하고,
+# HS-Grad와 Some-college는 HS-Graduate으로 통합하였습니다. 
+dataset.loc[dataset['education'] == 'Preschool', 'education'] = 'Dropout'# 중퇴
+dataset.loc[dataset['education'] == '1st-4th', 'education'] = 'Dropout'  
+dataset.loc[dataset['education'] == '5th-6th', 'education'] = 'Dropout'  
+dataset.loc[dataset['education'] == '7th-8th', 'education'] = 'Dropout'  
+dataset.loc[dataset['education'] == '9th', 'education'] = 'Dropout' 
+dataset.loc[dataset['education'] == '10th', 'education'] = 'Dropout'  
+dataset.loc[dataset['education'] == '11th', 'education'] = 'Dropout'  
+dataset.loc[dataset['education'] == '12th', 'education'] = 'Dropout'
+
+dataset.loc[dataset['education'] == 'Assoc-acdm', 'education'] = 'Associate'  # 전문대학 
+dataset.loc[dataset['education'] == 'Assoc-voc', 'education'] = 'Associate'
+
+dataset.loc[dataset['education'] == 'HS-Grad', 'education'] = 'HS-Graduate'  #고등 학교  
+dataset.loc[dataset['education'] == 'Some-college', 'education'] = 'HS-Graduate'
+
+dataset.loc[dataset['education'] == 'Prof-school', 'education'] = 'Professor'  # 직업학교.  
+dataset.loc[dataset['education'] == 'Bachelors', 'education'] = 'Bachelors'  # 학사.  
+dataset.loc[dataset['education'] == 'Masters', 'education'] = 'Masters'  # 석사.  
+dataset.loc[dataset['education'] == 'Doctorate', 'education'] = 'Doctorate'  # 박사.
+plt.style.use('seaborn-whitegrid')  
+fig = plt.figure(figsize=(15,4))   
+sns.countplot(y="education", data=dataset); 
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/6feaba9d-0862-4c00-953f-54f22e7611f8)
+
+- 데이터 셋 'marital-status'의 범주 단순화
+```ruby
+#데이터 세트는 총 7가지 혼인 상태를 나타냅니다.
+# Married-civ-spouse(기혼, 민간인 배우자와 동거 중), Divorced(이혼), Never-married(미혼),
+#Separated(별거), Widowed(사별), Married-spouse-absent(기혼, 배우자와 떨어져 있는 상태),
+# arried-AF-spouse(기혼, 군인 배우자와 동거 중)로 나뉩니다.
+plt.style.use('seaborn-whitegrid')  
+plt.figure(figsize=(10,3))   
+sns.countplot(y="marital-status", data=dataset);
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/4d1c0601-4277-4954-b19e-caab27643e56)
+
+```ruby
+#위에서 확인한 7가지의 혼인 상태를 4가지로 통합하였다: 
+# 한 번도 결혼한 적이 없는 상태 / 이혼한 상태 / 기혼인 상태 / 사별한 상태 / 별거 중인 상태 
+dataset.loc[dataset['marital-status'] == 'Never-married', 'marital-status'] = 'Never-Married'  # 한 번도 결혼한 적이 없는 상태
+dataset.loc[dataset['marital-status'] == 'Divorced', 'marital-status'] = 'Divorced'# 이혼한 상태  
+dataset.loc[dataset['marital-status'] == 'Widowed', 'marital-status'] = 'Widowed'# 사별한 상태
+dataset.loc[dataset['marital-status'] == 'Married-spouse-absent', 'marital-status'] = 'Separated'  # 별거 중인 상태
+dataset.loc[dataset['marital-status'] == 'Separated', 'marital-status'] = 'Separated'
+dataset.loc[dataset['marital-status'] == 'Married-AF-spouse', 'marital-status'] = 'Married'  # 기혼인 상태
+dataset.loc[dataset['marital-status'] == 'Married-civ-spouse', 'marital-status'] = 'Married'    
+  
+plt.style.use('seaborn-whitegrid')  
+fig = plt.figure(figsize=(10,3))   
+sns.countplot(y="marital-status", data=dataset);  
+
+
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/2ab24e8b-a7a8-4ab2-9460-ef4fb9f397dd)
+
+
+- 범주를 단순화시킨 작업을 끝낸 후, 데이터 세트의 전체 분포 상황을 확인하였습니다.
+``` ruby
+plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
+```
+![image](https://github.com/rud15dns/aix_project/assets/113186906/a199b23b-d6f1-4f26-8563-542221c6f453)
+
+<br/><br/>
+- 데이터 세트를 머신 러닝 모델에 적합한 형식으로 바꾸기 위해 범주형 변수를 숫자형 변수로 변환합니다.
+```ruby
+dataset_num = dataset.copy() # 데이터 세트 복사  
+#범주형 변수를 숫자형 변수로 변환
+dataset_num['workclass'] = dataset_num['workclass'].factorize()[0]  
+dataset_num['education'] = dataset_num['education'].factorize()[0]  
+dataset_num['marital-status'] = dataset_num['marital-status'].factorize()[0]  
+dataset_num['occupation'] = dataset_num['occupation'].factorize()[0]  
+dataset_num['relationship'] = dataset_num['relationship'].factorize()[0]  
+dataset_num['race'] = dataset_num['race'].factorize()[0]  
+dataset_num['sex'] = dataset_num['sex'].factorize()[0]  
+dataset_num['country'] = dataset_num['country'].factorize()[0]  
+dataset_num['income-level'] = dataset_num['income-level'].factorize()[0]  
+```
+> - 각 범주형 변수에 대해 'factorize()' 함수를 사용하여 숫자형으로 변환합니다.
+> - factorize() 함수는 각 고유한 범주의 값을 정수로 맵핑합니다.
+> - 예를 들어서, workclass 열의 고유 값들이 ['Private', 'Self-emp-not-inc', 'Logical-gov', 'Private', 'Private...]이라면,
+> - 이들을 각각 [0, 1, 2, 0, 0, ...]와 같이 정수로 변환합니다.
 
 - 데이터셋의 숫자형 변수들 간의 상관 관계를 히트맵을 통해 확인합니다.
 
@@ -452,10 +604,7 @@ mask[np.triu_indices_from(mask)] = True
 sns.heatmap(dataset_num.corr(), vmin=-1, vmax=1, square=True,   
             cmap=sns.color_palette("RdBu_r", 100),   
             mask=mask, annot=True, linewidths=.5);  
-```
-![image](https://github.com/rud15dns/aix_project/assets/113186906/661e09af-459f-4b3d-8279-f2e790de38e2)
-
-  
+```  
   ![image](https://github.com/rud15dns/aix_project/assets/90837976/c10b4a5c-662d-42e6-b457-0890b6d3035d)
   >데이터에 따른 income-level(소득수준)의 변화를 확인 할 수 있습니다.
 
