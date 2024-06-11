@@ -805,8 +805,54 @@ print("Accuracy CV 10-Fold: %s" % acc_cv_knn)
 print("Running Time: %s s" % datetime.timedelta(seconds=knn_time))  
 ```
 
--  Stochastic Gradient Descent 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
--  Stochastic Gradient Descent 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+-  Logistic Regression 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+```ruby
+# 로지스틱 회귀
+# 하이퍼파라미터 설정 및 랜덤 서치 생성
+n_iter_search = 10  # 10번 훈련, 값이 클수록 매개변수 정확도가 높아지지만 검색 시간이 더 오래 걸립니다.
+param_dist = {'penalty': ['l2', 'l1'], 
+              'class_weight': [None, 'balanced'],
+              'C': np.logspace(-20, 20, 10000), 
+              'intercept_scaling': np.logspace(-20, 20, 10000)} 
+random_search = RandomizedSearchCV(LogisticRegression(),  # 사용할 분류기
+                                   n_jobs=-1,  # 모든 CPU를 사용하여 훈련합니다. 기본값은 1로 1개의 CPU를 사용합니다.
+                                   param_distributions=param_dist,
+                                   n_iter=n_iter_search)  # 훈련 횟수
+start = time.time()
+random_search.fit(x_train, y_train)
+print("RandomizedSearchCV took %.2f seconds for %d candidates"
+      " parameter settings." % ((time.time() - start), n_iter_search))
+report(random_search.cv_results_)
+
+# 랜덤 탐색기에서 얻은 매개변수가 가장 좋은 로지스틱 회귀 모델을 호출하여 훈련합니다.  
+start_time = time.time()  
+train_pred_log, test_pred_log, acc_log, acc_cv_log, probs_log = fit_ml_algo(  
+                                                                 random_search.best_estimator_,   
+                                                                 x_train,   
+                                                                 y_train,   
+                                                                 x_test,   
+                                                                 10)  
+log_time = (time.time() - start_time)  
+print("Accuracy: %s" % acc_log)  
+print("Accuracy CV 10-Fold: %s" % acc_cv_log)  
+print("Running Time: %s s" % datetime.timedelta(seconds=log_time).seconds)  
+
+
+```
+- Decision Tree Classifier 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+```ruby
+# Decision Tree Classifier  
+start_time = time.time()  
+train_pred_dt, test_pred_dt, acc_dt, acc_cv_dt, probs_dt= fit_ml_algo(DecisionTreeClassifier(),   
+              x_train,   
+              y_train,   
+              x_test,   
+              10)  
+dt_time = (time.time() - start_time)  
+print("Accuracy: %s" % acc_dt)  
+print("Accuracy CV 10-Fold: %s" % acc_cv_dt)  
+print("Running Time: %s s" % datetime.timedelta(seconds=dt_time).seconds)  
+```
 
 <br/><br/>
 
