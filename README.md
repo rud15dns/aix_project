@@ -3,17 +3,18 @@
 
 
 ## Members: 
-- 손주희 | ICT융합학부 | star7613@naver.com
-- 진수림 | 인공지능학과 | sl695969@outlook.com
-- 김채원 | ICT융합학부 | rud14dns@hanyang.ac.kr
-- 이상엽 | 화학공학과  | ben20141220@gmail.com
+- 손주희 | ICT융합학부 | star7613@naver.com | 깃허브, 코드 작성
+- 진수림 | 인공지능학과 | sl695969@outlook.com | 데이터셋 수집 , 모델 구축
+- 김채원 | ICT융합학부 | rud14dns@hanyang.ac.kr | 깃허브, 코드 작성
+- 이상엽 | 화학공학과  | ben20141220@gmail.com | 발표, 영상 제작
+
 
 
 ## Index:
-I. Proposal
-II. Datasets
-III. Methodology
-IV. Evaluation & Analysis
+I. Proposal)<br/>
+II. Datasets)<br/>
+III. Methodology)<br/>
+IV. Evaluation & Analysis)<br/>
 V. Related Work
 
 
@@ -1021,8 +1022,3 @@ for i, model in list(enumerate(models)):
 - 향후 기회가 된다면 모델을 더 쉽게 이해할 수 있도록 하고, 추가적인 특징 추출과 하이퍼파라미터 조정을 통해 성능을 더욱 향상시킨 모델을 구축하고 싶습니다.  <br/>
 <br/>
 
-## VII. role in team ( 팀 내 역할) 
-- 손주희 | 깃허브, 코드 작성
-- 김채원 | 깃허브, 코드 작성
-- 진수림 | 데이터셋 수집 , 모델 구축
-- 이상엽 | 발표, 영상 제작
