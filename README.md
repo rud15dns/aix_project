@@ -774,6 +774,8 @@ print("Accuracy CV 10-Fold: %s" % acc_cv_linear_svc)
 print("Running Time: %s s" % datetime.timedelta(seconds=linear_svc_time).seconds)  
 ```
 -  Stochastic Gradient Descent 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+> - 매 반복마다 무작위로 선택된 데이터를 사용하여 가중치를 업데이트합니다.
+> - 경사하강법의 변형으로, 매우 큰 데이터셋에서도 빠르고 효율적으로 학습을 수행할 수 있습니다.
 ```ruby
 # Stochastic Gradient Descent 무작위 구배 하강
 start_time = time.time()  
