@@ -612,6 +612,7 @@ x_train,x_test,y_train,y_test = train_test_split(
 
 ```
 
+
 <br/><br/>
 
 ## III. Methodology <br/> 
@@ -733,7 +734,27 @@ print("Accuracy: %s" % acc_gaussian)
 print("Accuracy CV 10-Fold: %s" % acc_cv_gaussian)  
 print("Running Time: %s s" % datetime.timedelta(seconds=gaussian_time).seconds) 
 ```
+-  Linear SVC 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+> - SVM은 클래스를 구분하는 분류 문제에서, 각 클래스를 잘 구분하는 선을 그어주는 방식입니다.
+> - 클래스 간의 선을 그어주게 되고, 가장 가까이 있는 점들을 Support Vector라고 하고, 찾은 직선과 서포트 벡터 사이의 처리를 최대 마진이라고 합니다. 마진을 최대로 하는 서포트벡터와 직선을 찾는 것이 목표입니다.
+> - SVC는 SVM을 구현하는 Scikit-Learn의 클래스이며, 그 중 선형 커널을 사용하는 것이 Linera SVC모델입니다. 선형 커널은 데이터가 선형적으로 구분될 수 있는 경우에 적합합니다. 
+```ruby
+# Linear SVC  
+start_time = time.time()  
+# kernel = ‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’  
+svc_clf = SVC(probability=True, max_iter=1000, kernel='linear')  
+train_pred_svc, test_pred_svc, acc_linear_svc, acc_cv_linear_svc, probs_svc= fit_ml_algo(svc_clf,  
+              x_train,   
+              y_train,  
+              x_test,   
+              10)  
+linear_svc_time = (time.time() - start_time)  
+print("Accuracy: %s" % acc_linear_svc)  
+print("Accuracy CV 10-Fold: %s" % acc_cv_linear_svc)  
+print("Running Time: %s s" % datetime.timedelta(seconds=linear_svc_time).seconds)  
 
+
+```
 <br/><br/>
 
 
