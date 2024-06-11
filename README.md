@@ -752,8 +752,21 @@ linear_svc_time = (time.time() - start_time)
 print("Accuracy: %s" % acc_linear_svc)  
 print("Accuracy CV 10-Fold: %s" % acc_cv_linear_svc)  
 print("Running Time: %s s" % datetime.timedelta(seconds=linear_svc_time).seconds)  
-
-
+```
+-  Stochastic Gradient Descent 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+```ruby
+# Stochastic Gradient Descent 무작위 구배 하강
+start_time = time.time()  
+train_pred_sgd, test_pred_sgd, acc_sgd, acc_cv_sgd, probs_sgd= fit_ml_algo(  
+              SGDClassifier(n_jobs = -1, loss='log'),   
+              x_train,   
+              y_train,   
+              x_test,   
+              10)  
+sgd_time = (time.time() - start_time)  
+print("Accuracy: %s" % acc_sgd)  
+print("Accuracy CV 10-Fold: %s" % acc_cv_sgd)  
+print("Running Time: %s s" % datetime.timedelta(seconds=sgd_time).seconds)  
 ```
 <br/><br/>
 
