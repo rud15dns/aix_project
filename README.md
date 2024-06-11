@@ -702,6 +702,9 @@ print("Running Time: %s s" % datetime.timedelta(seconds=gbt_time).seconds)
 <br/>
 
 -  AdaBoost Classifier(에이다부스트) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+> - Scikit-Learn 에서 제공하는 AdaBoost Classifier입니다.
+> - 여러 개의 약한 학습기를 결합하여 분류 성능을 향상시킵니다. 
+> - 각 학습기는 이전 학습기의 오차를 보완하는 방식으로 학습됩니다. 잘못 분류된 데이터에 더 큰 가중치를 부여하여 다음 학습기가 이를 올바르게 분류하도록 학습합니다. 
 ```ruby
 
 
