@@ -369,7 +369,7 @@ plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/c3be7e22-ebd2-40a6-be17-24e6de624a43)
 > - 범주형(이산형) 데이터인 경우, 각 변수에 대한 빈도수를 세로 막대 그래프로 그립니다.
-> - 수치형(연속형) 데이터인 경우, 히스토그램과 KDE 그래포로 그립니다. 
+> - 수치형(연속형) 데이터인 경우, 히스토그램과 KDE 그래프로 그립니다. 
 
 <br/><br/>  
 
