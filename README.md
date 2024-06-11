@@ -363,16 +363,7 @@ plot_distribution(dataset, cols=3, width=20, height=20, hspace=0.45, wspace=0.5)
 >데이터셋 내의 범주형 변수를 더 일반적이고 일관성 있는 범주로 변환합니다.<br/><br/>
 
 -  데이터 셋 'workclass' 의 범주 단순화
-  
-```ruby
-# 이 데이터 세트에서 작업 유형(workclass) 지표에는 Private, Self-emp-not-inc, Self-emp-inc,
-# Federal-gov, Local-gov, State-gov, Without-pay, Never-worked의 8가지 유형이 있습니다.
-#막대 차트를 그려 workclass에 따른 샘플 수를 확인하였습니다.
-plt.style.use('seaborn-whitegrid')  
-plt.figure(figsize=(15, 4))   
-sns.countplot(y="workclass", data=dataset);
-```
-![image](https://github.com/rud15dns/aix_project/assets/113186906/642d7fda-bdb1-4d9c-9960-f12e180f1eb3)
+
 
 ``` ruby
 #위의 막대 그래프에서 민간 작업이 표본에서 차지하는 비중이 상대적으로 크고 비작업 및 비수입 작업 표본의 수는 매우 적음을 알 수 있으며 실제 상황에 따라 5가지 범주로 요약됩니다.
@@ -396,19 +387,10 @@ sns.countplot(y="workclass", data=dataset);
 > - 위의 막대 그래프에서 민간 작업이 표본에서 차지하는 비중이 상대적으로 크고 비작업 및 비수입 작업 표본의 수는 매우 적음을 확인하였습니다.
 > - 해당 동향을 파악하여 비슷한 범주를 통합함으로써 5가지 범주로 요약하였습니다.
 
+<br/>
 
--  데이터 셋 'Occupation' 의 범주 단순화
+- 데이터 셋 'Occupation' 의 범주 단순화
   
-```ruby
-#직업은 Tech-support(기술 지원), Craft-repair(수공예 정비), Other-service(기타 서비스),
-#Sales(판매), Exec-managerial(경영 및 관리), Prof-specialty(전문기술직),
-#Handlers-cleaners(노동 및 청소), Machine-op-inspct(기계 조작 및 검사),
-# Adm-clerical(행정 및 사무), Farming-fishing-fishing(농업 및 어업) 등 총 14가지 유형이 있습니다.
-plt.style.use('seaborn-whitegrid')  
-plt.figure(figsize=(15,5))   
-sns.countplot(y="occupation", data=dataset);  
-```
-![image](https://github.com/rud15dns/aix_project/assets/113186906/b56c94f4-9e3a-4400-8ff5-e00fb286a9d8)
 
 ``` ruby
 dataset.loc[dataset['occupation'] == 'Adm-clerical', 'occupation'] = 'Admin'  # 행정 사무
@@ -436,6 +418,7 @@ sns.countplot(y="occupation", data=dataset);
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/7633dc7f-064d-4edd-916e-1d7238be6b1b)
 > - 위의 막대 그래프에서 비슷한 범주를 통합함으로써 6가지 범주로 요약하였습니다.
+<br/>
 
 -  데이터 셋 'Country' 의 범주 단순화
 ``` ruby
@@ -493,15 +476,9 @@ fig = plt.figure(figsize=(15,4))
 sns.countplot(y="country", data=dataset);  
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/aa5351d8-4295-4e14-8365-01c39d9262a7)
+<br/>
 
 - 데이터 셋 'Education'의 범주 단순화
-``` ruby
-# 교육 수준을 나타내는 'Education' 데이터세트에 대해서 막대그래프를 그려 분포 상황을 확인하였습니다.
-plt.style.use('seaborn-whitegrid')  
-plt.figure(figsize=(15,5))   
-sns.countplot(y="education", data=dataset);
-```
-![image](https://github.com/rud15dns/aix_project/assets/113186906/39ef77a0-9255-43e1-982a-c9cfc18c5190)
 
 ``` ruby
 #위의 막대 그래프에서 확인해 본 결과, 교육 수준은 총 16가지로 나뉘며,
@@ -534,20 +511,12 @@ sns.countplot(y="education", data=dataset);
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/6feaba9d-0862-4c00-953f-54f22e7611f8)
 
+<br/>
+
 - 데이터 셋 'marital-status'의 범주 단순화
-```ruby
-#데이터 세트는 총 7가지 혼인 상태를 나타냅니다.
-# Married-civ-spouse(기혼, 민간인 배우자와 동거 중), Divorced(이혼), Never-married(미혼),
-#Separated(별거), Widowed(사별), Married-spouse-absent(기혼, 배우자와 떨어져 있는 상태),
-# arried-AF-spouse(기혼, 군인 배우자와 동거 중)로 나뉩니다.
-plt.style.use('seaborn-whitegrid')  
-plt.figure(figsize=(10,3))   
-sns.countplot(y="marital-status", data=dataset);
-```
-![image](https://github.com/rud15dns/aix_project/assets/113186906/4d1c0601-4277-4954-b19e-caab27643e56)
 
 ```ruby
-#위에서 확인한 7가지의 혼인 상태를 4가지로 통합하였다: 
+# 7가지의 혼인 상태를 4가지로 통합하였다: 
 # 한 번도 결혼한 적이 없는 상태 / 이혼한 상태 / 기혼인 상태 / 사별한 상태 / 별거 중인 상태 
 dataset.loc[dataset['marital-status'] == 'Never-married', 'marital-status'] = 'Never-Married'  # 한 번도 결혼한 적이 없는 상태
 dataset.loc[dataset['marital-status'] == 'Divorced', 'marital-status'] = 'Divorced'# 이혼한 상태  
@@ -564,7 +533,7 @@ sns.countplot(y="marital-status", data=dataset);
 
 ```
 ![image](https://github.com/rud15dns/aix_project/assets/113186906/2ab24e8b-a7a8-4ab2-9460-ef4fb9f397dd)
-
+<br/><br/>
 
 - 범주를 단순화시킨 작업을 끝낸 후, 데이터 세트의 전체 분포 상황을 확인하였습니다.
 ``` ruby
