@@ -96,7 +96,7 @@ country	        국적	        이산형	"United-States(미국), Cambodia(캄보
 
 ```
 <br/><br/>  
-### [2] 데이터 전처리 - 결측 값 처리<br/>  
+### [2] 결측 값 처리<br/>  
 - 데이터셋에서 누락된 데이터가 있는지 python의 'missingno' 라이브러리를 사용하여 확인합니다.
 ```ruby
 missingno.matrix(dataset, figsize = (20,5))
