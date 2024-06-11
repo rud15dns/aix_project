@@ -727,7 +727,11 @@ train_pred_gaussian, test_pred_gaussian, acc_gaussian, acc_cv_gaussian, probs_ga
               x_train,   
               y_train,   
               x_test,   
-              10)  
+              10)
+gaussian_time = (time.time() - start_time)  
+print("Accuracy: %s" % acc_gaussian)  
+print("Accuracy CV 10-Fold: %s" % acc_cv_gaussian)  
+print("Running Time: %s s" % datetime.timedelta(seconds=gaussian_time).seconds) 
 ```
 
 <br/><br/>
