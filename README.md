@@ -576,8 +576,8 @@ dataset_num['income-level'] = dataset_num['income-level'].factorize()[0]
 ```
 > - 각 범주형 변수에 대해 'factorize()' 함수를 사용하여 숫자형으로 변환합니다.
 > - factorize() 함수는 각 고유한 범주의 값을 정수로 맵핑합니다.
-> - 예를 들어서, workclass 열의 고유 값들이 ['Private', 'Self-emp-not-inc', 'Logical-gov', 'Private', 'Private...]이라면,
-> - 이들을 각각 [0, 1, 2, 0, 0, ...]와 같이 정수로 변환합니다.
+> - 예를 들어서, workclass 열의 고유 값들이 ['Private', 'Self-emp-not-inc', 'Logical-gov', 'Private', 'Private...]이라면,<br/>
+>  이들을 각각 [0, 1, 2, 0, 0, ...]와 같이 정수로 변환합니다.
 
 <br/><br/>
 
@@ -671,7 +671,7 @@ def fit_ml_algo(algo, X_train, y_train, X_test, cv):
 
 <br/>
 
-- Random Forest Classifier(랜덤 포레스트) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+- (1) Random Forest Classifier(랜덤 포레스트) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 > - 배깅 기법을 사용하여 여러 학습기를 병렬로 학습시킵니다. 각 학습기는 서로 다른 데이터 샘플과 특징을 사용하여 학습됩니다. 그 후, 각 학습기의 예측을 평균내어 최종 예측을 만듭니다. 
 > - 배깅은 여러 개의 모델을 독립적으로 학습시키고, 이들의 예측을 결합하여 최종 예측을 만드는 방법입니다. 
   
@@ -698,7 +698,7 @@ print("Running Time: %s s" % datetime.timedelta(seconds=rf_time).seconds)
 ```
 <br/>
 
-- Gradient Boosting Trees (그레이디언트업 의사결정 트리) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+- (2) Gradient Boosting Trees (그레이디언트업 의사결정 트리) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 > - 새로운 트리는 이전 트리들의 오차를 줄이는 방향으로 학습되는데, 이 때 오차를 줄이기 위해 경사하강법을 이용하여 모델을 최적화합니다.
 > - 최종 트리는 각 트리의 예측값을 모두 합산하여 만듭니다. 
 
@@ -718,7 +718,7 @@ print("Running Time: %s s" % datetime.timedelta(seconds=gbt_time).seconds)
 
 <br/>
 
--  AdaBoost Classifier(에이다부스트) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+-  (3) AdaBoost Classifier(에이다부스트) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 > - Scikit-Learn 에서 제공하는 AdaBoost Classifier입니다.
 > - 여러 개의 약한 학습기를 결합하여 분류 성능을 향상시킵니다. 
 > - 각 학습기는 이전 학습기의 오차를 보완하는 방식으로 학습됩니다. 잘못 분류된 데이터에 더 큰 가중치를 부여하여 다음 학습기가 이를 올바르게 분류하도록 학습합니다. 
@@ -738,7 +738,7 @@ print("Accuracy CV 10-Fold: %s" % acc_cv_adb)
 print("Running Time: %s s" % datetime.timedelta(seconds=adb_time).seconds)  
 
 ```
--  Naive Bayes(GaussianNB) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+-  (4) Naive Bayes(GaussianNB) 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 > - 머신러닝의 Naive Bayes 알고리즘 중 하나입니다.
 > - 모든 특징이 서로 독립적이라고 가정합니다. 
 > - 연속형 데이터를 처리하기 위해 각 특징이 정규분포를 따른다고 가정합니다.
@@ -754,7 +754,7 @@ print("Accuracy: %s" % acc_gaussian)
 print("Accuracy CV 10-Fold: %s" % acc_cv_gaussian)  
 print("Running Time: %s s" % datetime.timedelta(seconds=gaussian_time).seconds) 
 ```
--  Linear SVC 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+-  (5) Linear SVC 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 > - SVM은 클래스를 구분하는 분류 문제에서, 각 클래스를 잘 구분하는 선을 그어주는 방식입니다.
 > - 클래스 간의 선을 그어주게 되고, 가장 가까이 있는 점들을 Support Vector라고 하고, 찾은 직선과 서포트 벡터 사이의 처리를 최대 마진이라고 합니다. 마진을 최대로 하는 서포트벡터와 직선을 찾는 것이 목표입니다.
 > - SVC는 SVM을 구현하는 Scikit-Learn의 클래스이며, 그 중 선형 커널을 사용하는 것이 Linera SVC모델입니다. 선형 커널은 데이터가 선형적으로 구분될 수 있는 경우에 적합합니다. 
@@ -773,7 +773,7 @@ print("Accuracy: %s" % acc_linear_svc)
 print("Accuracy CV 10-Fold: %s" % acc_cv_linear_svc)  
 print("Running Time: %s s" % datetime.timedelta(seconds=linear_svc_time).seconds)  
 ```
--  Stochastic Gradient Descent 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+- (6) Stochastic Gradient Descent 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 > - 매 반복마다 무작위로 선택된 데이터를 사용하여 가중치를 업데이트합니다.
 > - 경사하강법의 변형으로, 매우 큰 데이터셋에서도 빠르고 효율적으로 학습을 수행할 수 있습니다.
 ```ruby
@@ -790,7 +790,7 @@ print("Accuracy: %s" % acc_sgd)
 print("Accuracy CV 10-Fold: %s" % acc_cv_sgd)  
 print("Running Time: %s s" % datetime.timedelta(seconds=sgd_time).seconds)  
 ```
--  Voting Classifier 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+-  (7) Voting Classifier 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 > - 여러 개의 다른 머신러닝 모델(예 : 로지스틱 회귀, 결정 트리 등)을 결합하여 최종 예측을 만드는 학습 기법입니다.
 > - voting = 'soft'를 하여, 소프트 보팅을 사용합니다. 각 모델의 예측 확률을 평균내어 최종 예측을 결정합니다. 
 ```ruby
@@ -813,7 +813,7 @@ print("Accuracy: %s" % acc_vot)
 print("Accuracy CV 10-Fold: %s" % acc_cv_vot)  
 print("Running Time: %s s" % datetime.timedelta(seconds=vot_time).seconds)  
 ```
--  K-NN 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+-  (8) K-NN 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 > - 어떤 데이터가 주어지면, 그 주변(이웃)의 데이터 k개를 살펴본 뒤 더 많은 데이터가 포함되어 있는 범주로 분류합니다.
 > - 모델 훈련이 별도로 필요하지 않습니다.
 > - n_neighbors = 3으로 하여, 예측을 위해 참조할 이웃의 수를 3으로 설정하였습니다.
@@ -832,7 +832,7 @@ print("Accuracy CV 10-Fold: %s" % acc_cv_knn)
 print("Running Time: %s s" % datetime.timedelta(seconds=knn_time))  
 ```
 
--  Logistic Regression 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+-  (9) Logistic Regression 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 > - 주어진 입력(독립 변수)에 대해 특정 클래스에 속할 확률을 예측합니다.
 > - 예측된 확률은 로지스틱 함수를 통해서 결정되며, 이 모델은 결과가 0과 1 사이의 값으로 제한됩니다.
 ```ruby
@@ -869,7 +869,7 @@ print("Running Time: %s s" % datetime.timedelta(seconds=log_time).seconds)
 
 
 ```
-- Decision Tree Classifier 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+- (10) Decision Tree Classifier 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
 > - 이 모델은 데이터의 특성을 기반으로 Decision nodes와 lead nodes를 포함한 트리 구조를 생성합니다. 각 내부 노드는 데이터의 속성에 대한 결정 규칙을 나타내며, 각 leaf node는 결과의 클래스 레이블(최종적인 예측)을 나타냅니다.
 > - 데이터를 가장 잘 나눌 수 있는 특성과 그 임계값을 찾기 위하여 엔트로피(데이터의 불확실성)와 같은 기준을 사용합니다. 
 ```ruby
@@ -894,7 +894,7 @@ print("Running Time: %s s" % datetime.timedelta(seconds=dt_time).seconds)
 
 ### [1] 모델 성능 비교를 위한 데이터프레임 생성
 
-- 주어진 코드는 여러 머신러닝 모델의 성능을 비교하기 위해 정확도, 교차 검증 정확도, 정밀도, 재현율, F1 점수를 포함한 데이터프레임을 생성합니다. 이를 통해 각 모델의 성능을 쉽게 비교할 수 있습니다.
+- 주어진 코드는 여러 머신러닝 모델의 성능을 비교하기 위해 정확도, 교차 검증 정확도, 정밀도, 재현율, F1 점수를 포함한 데이터프레임을 생성합니다.  <br/> 이를 통해 각 모델의 성능을 쉽게 비교할 수 있습니다.
 
 ```ruby
 models = pd.DataFrame({  
@@ -960,7 +960,7 @@ models.sort_values(by='Acc', ascending=False)
 
 <img width="510" alt="image" src="https://github.com/rud15dns/aix_project/assets/90837976/9d994548-47db-4fd0-aec2-e0be4a4995c4">
 
--  본 훈련에 사용된 10개 모델 중 랜덤 포레스트(RandomForest),경사도 상승 결정 트리(Gradient Boosting Trees), 에이다부스트(AdaBoost)의 3개 모델의 정확도가 85% 이상으로 양호함을 알 수 있으며 F1 값도 다른 모델에 비해 우수한 수준이기 때문에 지표의 관점에서 이 세 모델이 본 논문에서 연구한 문제에 더 적합하다고 판단하였습니다.
+> 본 훈련에 사용된 10개 모델 중 랜덤 포레스트(RandomForest),경사도 상승 결정 트리(Gradient Boosting Trees), 에이다부스트(AdaBoost)의 3개 모델의 정확도가 85% 이상으로 양호함을 알 수 있으며 F1 값도 다른 모델에 비해 우수한 수준이기 때문에 지표의 관점에서 이 세 모델이 본 논문에서 연구한 문제에 더 적합하다고 판단하였습니다.
 
 <br/>
 
@@ -1029,7 +1029,7 @@ for i, model in list(enumerate(models)):
 > 세 가지 성능 평가 방법 모두에서 10개의 모델 중 랜덤 포레스트(RandomForest), 경사하강 결정 트리(Gradient Boosting Trees), 에이다부스트(AdaBoost) 모델이 가장 우수한 것으로 평가되었습니다.
 <br/><br/>
 
-## V. Related Work (e.g., existing studies)
+## V. Related Work
 
 - https://www.kaggle.com/datasets/uciml/adult-census-income
 - https://dacon.io/competitions/official/235892/talkboard
