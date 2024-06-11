@@ -814,6 +814,9 @@ print("Accuracy CV 10-Fold: %s" % acc_cv_vot)
 print("Running Time: %s s" % datetime.timedelta(seconds=vot_time).seconds)  
 ```
 -  K-NN 모델을 사용하여 데이터셋을 학습시키고, 모델의 성능을 평가합니다.
+> - 어떤 데이터가 주어지면, 그 주변(이웃)의 데이터 k개를 살펴본 뒤 더 많은 데이터가 포함되어 있는 범주로 분류합니다.
+> - 모델 훈련이 별도로 필요하지 않습니다.
+> - n_neighbors = 3으로 하여, 예측을 위해 참조할 이웃의 수를 3으로 설정하였습니다.
 ```ruby
 # k-Nearest Neighbors  
 start_time = time.time()  
