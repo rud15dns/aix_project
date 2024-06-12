@@ -532,7 +532,7 @@ sns.countplot(y="education", data=dataset);
 - 데이터 셋 'marital-status'의 범주 단순화
 
 ```ruby
-# 7가지의 혼인 상태를 4가지로 통합하였다: 
+# 7가지의 혼인 상태를 5가지로 통합하였다: 
 # 한 번도 결혼한 적이 없는 상태 / 이혼한 상태 / 기혼인 상태 / 사별한 상태 / 별거 중인 상태 
 dataset.loc[dataset['marital-status'] == 'Never-married', 'marital-status'] = 'Never-Married'  # 한 번도 결혼한 적이 없는 상태
 dataset.loc[dataset['marital-status'] == 'Divorced', 'marital-status'] = 'Divorced'# 이혼한 상태  
