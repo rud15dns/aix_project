@@ -23,7 +23,8 @@
  [3] Precision-Recall 곡선 시각화 <br/>
 #### V. Related Work<br/>
 
-## Video Link : https://www.youtube.com/watch?v=cEOBPfzEGpQ
+## Video Link :<br/>
+https://www.youtube.com/watch?v=cEOBPfzEGpQ
 
 
 ## I. Proposal (Option A )<br/>
